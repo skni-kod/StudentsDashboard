@@ -6,9 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-
   <ItemGroup>
-    <ProjectReference Include="..\StudentsDashboard.Domain\StudentsDashboard.Domain.csproj" />
+    <ProjectReference Include="..\..\Core\StudentsDashboard.Application\StudentsDashboard.Application.csproj" />
+    <ProjectReference Include="..\..\Core\StudentsDashboard.Domain\StudentsDashboard.Domain.csproj" />
   </ItemGroup>
 
 </Project>
