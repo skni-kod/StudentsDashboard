@@ -10,7 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="7.0.0-alpha.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+    <PackageReference Include="NetArchTest.Rules" Version="1.3.2" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -20,6 +22,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\API\StudentsDashboard.Api\StudentsDashboard.Api.csproj" />
+    <ProjectReference Include="..\..\src\Core\StudentsDashboard.Application\StudentsDashboard.Application.csproj" />
+    <ProjectReference Include="..\..\src\Core\StudentsDashboard.Domain\StudentsDashboard.Domain.csproj" />
+    <ProjectReference Include="..\..\src\External\StudentsDashboard.Infrastructure\StudentsDashboard.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\External\StudentsDashboard.Presentation\StudentsDashboard.Presentation.csproj" />
   </ItemGroup>
 
 </Project>
