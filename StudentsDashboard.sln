@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsDashboard.Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsDashboard.Presentation", "src\External\StudentsDashboard.Presentation\StudentsDashboard.Presentation.csproj", "{BB068E2C-399E-481E-A192-E15104D326BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsDashboard.CleanArchitectureTests", "test\StudentsDashboard.CleanArchitectureTests\StudentsDashboard.CleanArchitectureTests.csproj", "{F3154E11-6DFB-46EA-A3E4-01F05185E9F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{BB068E2C-399E-481E-A192-E15104D326BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB068E2C-399E-481E-A192-E15104D326BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB068E2C-399E-481E-A192-E15104D326BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3154E11-6DFB-46EA-A3E4-01F05185E9F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3154E11-6DFB-46EA-A3E4-01F05185E9F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3154E11-6DFB-46EA-A3E4-01F05185E9F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3154E11-6DFB-46EA-A3E4-01F05185E9F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DD6A2986-A4A4-4DB4-B98C-10DE1026F242} = {3F317785-2579-4090-AE41-8E6A4B758D5C}
@@ -76,5 +82,6 @@ Global
 		{2A2400D8-8BD0-4E53-B0C9-E1EB6A81C638} = {3F317785-2579-4090-AE41-8E6A4B758D5C}
 		{D86D8D1F-5D7A-4BEB-90B7-AC0D1BF447CF} = {2A2400D8-8BD0-4E53-B0C9-E1EB6A81C638}
 		{BB068E2C-399E-481E-A192-E15104D326BB} = {2A2400D8-8BD0-4E53-B0C9-E1EB6A81C638}
+		{F3154E11-6DFB-46EA-A3E4-01F05185E9F6} = {D49001D6-6992-4D6F-B8FB-8E54A2069C02}
 	EndGlobalSection
 EndGlobal
