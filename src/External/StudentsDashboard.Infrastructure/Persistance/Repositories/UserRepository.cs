@@ -19,6 +19,12 @@ public class UserRepository : IUserRepository
         return user;
     }
 
+    public bool Any(string email)
+    {
+        var isExist = _dbContext.Users.Any(r => r.Email == email);
+        return isExist;
+    }
+
     public void Add(User user)
     {
         user.Password = BC.HashPassword(user.Password);

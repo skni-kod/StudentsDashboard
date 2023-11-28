@@ -5,7 +5,7 @@ namespace StudentsDashboard.Api.Controllers;
 
 public class ErrorsController : ControllerBase
 {
-    [Route("/error")]
+    [HttpGet("/error")]
     public IActionResult Error()
     {
         Exception? exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;

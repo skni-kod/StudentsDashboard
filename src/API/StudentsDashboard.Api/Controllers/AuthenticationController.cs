@@ -5,9 +5,8 @@ using StudentsDashboard.Application.Contracts.Authentication;
 
 namespace StudentsDashboard.Api.Controllers;
 
-[ApiController]
 [Route("api/auth")]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController : ApiController
 {
     private readonly ISender _mediator;
 
@@ -26,7 +25,9 @@ public class AuthenticationController : ControllerBase
             request.Password,
             request.ConfirmPassword);
 
-        await _mediator.Send(command);
-        return Ok();
+        var response = await _mediator.Send(command);
+        return response.Match(
+            registerResponse => Ok(registerResponse),
+            errors => Problem(errors));
     }
 }

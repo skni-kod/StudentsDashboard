@@ -1,10 +1,13 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
+using StudentsDashboard.Application.Common.Errors;
+using StudentsDashboard.Application.Contracts.Authentication;
 using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Domain.Entities;
 
 namespace StudentsDashboard.Application.Authentication.Commands.Register;
 
-public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
+public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<RegisterResponse>>
 {
     private readonly IUserRepository _userRepository;
 
@@ -13,18 +16,14 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
         _userRepository = userRepository;
     }
 
-    public Task Handle(RegisterCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<RegisterResponse>> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        if (_userRepository.GetUserByEmail(request.Email) is not null)
+        var isExist = _userRepository.Any(request.Email);
+        if (isExist)
         {
-            throw new Exception("User with given email already exists");
+            return Errors.User.DuplicateEmail;
         }
-
-        if (request.Password != request.ConfirmPassword)
-        {
-            throw new Exception("Password and Confim Password must be the same");
-        }
-
+        
         var user = new User
         {
             Email = request.Email,
@@ -35,6 +34,6 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
         
         _userRepository.Add(user);
 
-        return Task.CompletedTask;
+        return new RegisterResponse("Registration completed");
     }
 }
