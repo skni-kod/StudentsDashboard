@@ -1,7 +1,5 @@
 ﻿using StudentsDashboard.Domain.Entities;
 using StudentsDashboard.Application.Persistance;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using Microsoft.EntityFrameworkCore;
 
 namespace StudentsDashboard.Infrastructure.Persistance.Repositories;
 
@@ -33,17 +31,17 @@ public class WorkTaskRepository : IWorkTaskRepository
     {
         var result = _dbContext.WorkTasks.FirstOrDefault(c => c.Id_Task == Id);
 
-        if (result.name != editedTask.name)
+        if (result.Name != editedTask.Name)
         {
-            result.name = editedTask.name;
+            result.Name = editedTask.Name;
         }
-        if (result.date != editedTask.date)
+        if (result.Date != editedTask.Date)
         {
-            result.date = editedTask.date;
+            result.Date = editedTask.Date;
         }
-        if(result.desciption != editedTask.desciption)
+        if(result.Desciption != editedTask.Desciption)
         {
-            result.desciption = editedTask.desciption;
+            result.Desciption = editedTask.Desciption;
         }
 
         _dbContext.SaveChanges();
