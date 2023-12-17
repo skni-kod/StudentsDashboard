@@ -6,7 +6,7 @@ namespace StudentsDashboard.Application.Persistance
     public interface IWorkTaskRepository
     {
 
-        WorkTask? getTask(int Id);
+        WorkTask? getTask(int IdUser,int Id);
         IEnumerable<WorkTask> getAllTask(int IdUser);
         void createTask(WorkTask newTask);
         void deleteTask(int Id);

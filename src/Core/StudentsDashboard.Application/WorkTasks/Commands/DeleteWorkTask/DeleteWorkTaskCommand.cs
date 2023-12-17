@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ErrorOr;
+using MediatR;
+using StudentsDashboard.Application.Contracts.WorkTaskAnswer;
+
 
 namespace StudentsDashboard.Application.WorkTasks.Commands.DeleteWorkTask
 {
-    internal class DeleteWorkTaskCommand
-    {
-    }
+    public record DeleteWorkTaskCommand
+    (
+        int Id,
+        int IdUser) : IRequest<ErrorOr<WorkTaskResponse>>;
+
 }

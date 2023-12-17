@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using FluentValidation;
+
 
 namespace StudentsDashboard.Application.WorkTasks.Commands.GetWorkTask
 {
-    internal class GetWorkTaskValidator
+    public class GetWorkTaskValidator : AbstractValidator<GetWorkTaskCommand>
     {
+
+        public GetWorkTaskValidator() 
+        {
+            RuleFor(x => x.Id)
+            .NotEmpty().WithMessage("Id user is required");
+
+            RuleFor(x => x.IdUser)
+                .NotEmpty().WithMessage("Id user is required");
+        }
     }
 }

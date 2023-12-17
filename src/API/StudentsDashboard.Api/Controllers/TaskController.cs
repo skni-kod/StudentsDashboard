@@ -3,6 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using StudentsDashboard.Application.Contracts.WorkTaskAnswer;
 using StudentsDashboard.Application.WorkTasks.Commands.AddWorkTask;
 using StudentsDashboard.Application.WorkTasks.Commands.EditWorkTask;
+using StudentsDashboard.Application.WorkTasks.Commands.GetWorkTask;
+using StudentsDashboard.Application.WorkTasks.Commands.GetAllWorkTask;
+using StudentsDashboard.Application.WorkTasks.Commands.DeleteWorkTask;
+
+using static StudentsDashboard.Application.Common.Errors.Errors;
 
 
 
@@ -37,7 +42,7 @@ namespace StudentsDashboard.Api.Controllers
         }
 
 
-        [HttpPost("EditWorkTask")]
+        [HttpPut("EditWorkTask")]
         public async Task<IActionResult> EditWorkTask([FromBody] WorkTaskRequest request)
         {
             var command = new EditWorkTaskCommand(
@@ -54,37 +59,50 @@ namespace StudentsDashboard.Api.Controllers
                     errors => Problem(errors));
         }
 
-        /*[HttpPost("GetWorkTask")]
-        public async Task<IActionResult> GetWorkTask([FromBody] int id)
+        [HttpDelete("DeleteWorkTask")]
+        public async Task<IActionResult> DeleteWorkTask([FromBody] int Id, int IdUser)
         {
+            var command = new DeleteWorkTaskCommand(
+                Id,
+                IdUser
+                );
 
-            var response = await _mediator.Send(id);
+            var response = await _mediator.Send(command);
 
             return response.Match(
                     WorkTaskResponse => Ok(WorkTaskResponse),
                     errors => Problem(errors));
         }
 
-        [HttpPost("DeleteWorkTask")]
-        public async Task<IActionResult> DeleteWorkTask([FromBody] int id)
+        [HttpGet("GetWorkTask")]
+        public async Task<IActionResult> GetWorkTask([FromBody] int Id, int IdUser)
         {
-            var response = await _mediator.Send(id);
+            var command = new GetWorkTaskCommand(
+                Id,
+                IdUser
+                );
+
+            var response = await _mediator.Send(command);
 
             return response.Match(
                     WorkTaskResponse => Ok(WorkTaskResponse),
                     errors => Problem(errors));
         }
 
-
-        [HttpPost("GetAllWorkTask")]
-        public async Task<IActionResult> GetAllTask([FromBody] int id)
+        [HttpGet("GetAllWorkTask")]
+        public async Task<IActionResult> GetAllTask([FromBody] int IdUser)
         {
-            var response = await _mediator.Send(id);
+            var command = new GetAllWorkTaskCommand(
+                    IdUser
+                    );
+
+
+            var response = await _mediator.Send(command);
 
             return response.Match(
                     WorkTaskResponse => Ok(WorkTaskResponse),
                     errors => Problem(errors));
-        }*/
+        }
 
 
     }

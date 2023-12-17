@@ -29,7 +29,7 @@ namespace StudentsDashboard.Application.WorkTasks.Commands.EditWorkTask
 
             _workTaskRepository.editTask(request.Id,workTask);
 
-            return new WorkTaskResponse("Task added");
+            return new WorkTaskResponse("Task edited");
         }
     }
 }

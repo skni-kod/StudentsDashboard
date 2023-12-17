@@ -55,9 +55,9 @@ public class WorkTaskRepository : IWorkTaskRepository
         return taskList;
     }
 
-    public WorkTask? getTask(int Id)
+    public WorkTask? getTask(int IdUser,int Id)
     {
-        var task= _dbContext.WorkTasks.FirstOrDefault(r => r.Id_Task == Id);
+        var task= _dbContext.WorkTasks.FirstOrDefault(r => r.Id_Task == Id && r.Id_Customer == IdUser);
         return task;
     }
 }

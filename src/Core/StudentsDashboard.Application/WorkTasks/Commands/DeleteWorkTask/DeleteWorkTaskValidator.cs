@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+
 
 namespace StudentsDashboard.Application.WorkTasks.Commands.DeleteWorkTask
 {
-    internal class DeleteWorkTaskValidator
+    public class DeleteWorkTaskValidator : AbstractValidator<DeleteWorkTaskCommand>
     {
+
+        public DeleteWorkTaskValidator()
+        {
+
+            RuleFor(x => x.Id)
+            .NotEmpty().WithMessage("Id is required");
+
+        }
     }
 }
