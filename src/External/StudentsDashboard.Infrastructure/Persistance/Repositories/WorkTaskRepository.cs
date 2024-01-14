@@ -60,4 +60,5 @@ public class WorkTaskRepository : IWorkTaskRepository
         var task= _dbContext.WorkTasks.FirstOrDefault(r => r.Id_Task == Id && r.Id_Customer == IdUser);
         return task;
     }
+    
 }
