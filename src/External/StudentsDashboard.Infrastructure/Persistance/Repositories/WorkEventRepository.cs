@@ -39,4 +39,12 @@ public class WorkEventRepository : IWorkEventRepository
 
         return result != null && result.Id_Customer == userId;
     }
+
+    public void deleteEvent(int eventID)
+    {
+        var result = _context.WorkEvents.SingleOrDefault(x => x.Id_Event == eventID);
+
+        _context.WorkEvents.Remove(result);
+        _context.SaveChanges();
+    }
 }

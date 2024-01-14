@@ -1,7 +1,9 @@
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using StudentsDashboard.Application.Contracts.WorkEventAnswer;
 using StudentsDashboard.Application.WorkEvents.Commands.AddWorkEvent;
+using StudentsDashboard.Application.WorkEvents.Commands.DeleteWorkEvent;
 using StudentsDashboard.Application.WorkEvents.Commands.EditWorkEvent;
 
 namespace StudentsDashboard.Api.Controllers;
@@ -48,6 +50,18 @@ public class EventController : ApiController
             request.ToTime,
             request.Location
         );
+
+        var response = await _mediator.Send(command);
+
+        return response.Match(
+            WorkEventResponse => Ok(WorkEventResponse),
+            errors => Problem(errors));
+    }
+
+    [HttpDelete("DeleteWorkEvent/{id}")]
+    public async Task<IActionResult> DeleteWorkEvent([FromRoute] int id)
+    {
+        var command = new DeleteWorkEventCommand(id);
 
         var response = await _mediator.Send(command);
 

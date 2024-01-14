@@ -8,6 +8,6 @@ public class EditWorkEventValidator : AbstractValidator<EditWorkEventCommand>
     public EditWorkEventValidator()
     {
         RuleFor(x => x.Id)
-            .NotEmpty().WithMessage("You must give ID");
+            .NotEmpty().NotNull().WithMessage("You must give ID");
     }
 }
