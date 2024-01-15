@@ -5,6 +5,7 @@ using StudentsDashboard.Application.Contracts.WorkEventAnswer;
 using StudentsDashboard.Application.WorkEvents.Commands.AddWorkEvent;
 using StudentsDashboard.Application.WorkEvents.Commands.DeleteWorkEvent;
 using StudentsDashboard.Application.WorkEvents.Commands.EditWorkEvent;
+using StudentsDashboard.Application.WorkEvents.Queries.GetUnstartedEvents;
 
 namespace StudentsDashboard.Api.Controllers;
 
@@ -68,5 +69,16 @@ public class EventController : ApiController
         return response.Match(
             WorkEventResponse => Ok(WorkEventResponse),
             errors => Problem(errors));
+    }
+
+    [HttpGet("GetUnstartedEvents")]
+    public async Task<IActionResult> GetUnstartedEvents()
+    {
+        var query = new GetUnstartedEventsQuery(DateOnly.FromDateTime(DateTime.Now), 
+            TimeOnly.FromDateTime(DateTime.Now));
+
+        var respone = await _mediator.Send(query);
+
+        return Ok(respone);
     }
 }

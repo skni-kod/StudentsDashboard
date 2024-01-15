@@ -8,4 +8,5 @@ public interface IWorkEventRepository
     void editEvent(int Id, WorkEvent editEvent);
     bool HasPermision(int userId, int eventId);
     void deleteEvent(int eventID);
+    IEnumerable<WorkEvent> GetUnstartedEvents(DateOnly currentDate, TimeOnly currentTime, int userId);
 }

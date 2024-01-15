@@ -47,4 +47,15 @@ public class WorkEventRepository : IWorkEventRepository
         _context.WorkEvents.Remove(result);
         _context.SaveChanges();
     }
+
+    public IEnumerable<WorkEvent> GetUnstartedEvents(DateOnly currentDate, TimeOnly currentTime, int userId)
+    {
+        var result = _context.WorkEvents
+            .Where(e => (e.From_Date > currentDate ||
+                         (e.From_Date == currentDate && e.From_Time > currentTime)) &&
+                        e.Id_Customer == userId)
+            .ToList();
+
+        return result;
+    }
 }
