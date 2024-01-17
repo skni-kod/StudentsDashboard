@@ -1,6 +1,6 @@
 namespace StudentsDashboard.Domain.WorkEvents.Enums;
 
-public enum DisplayData
+public enum DisplayEventsData
 {
     Started,
     Unstarted,

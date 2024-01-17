@@ -5,7 +5,8 @@ using StudentsDashboard.Application.Contracts.WorkEventAnswer;
 using StudentsDashboard.Application.WorkEvents.Commands.AddWorkEvent;
 using StudentsDashboard.Application.WorkEvents.Commands.DeleteWorkEvent;
 using StudentsDashboard.Application.WorkEvents.Commands.EditWorkEvent;
-using StudentsDashboard.Application.WorkEvents.Queries.GetUnstartedEvents;
+using StudentsDashboard.Application.WorkEvents.Queries.GetManyEvents;
+using StudentsDashboard.Application.WorkEvents.Queries.GetSpecificEvent;
 
 namespace StudentsDashboard.Api.Controllers;
 
@@ -77,7 +78,17 @@ public class EventController : ApiController
         var respone = await _mediator.Send(query);
 
         return respone.Match(
-            respone => Ok(respone),
+            respones => Ok(respones),
+            errors => Problem(errors));
+    }
+
+    [HttpGet("GetEvent/{id}")]
+    public async Task<IActionResult> GetEvent([FromRoute]GetEventQuery query)
+    {
+        var response = await _mediator.Send(query);
+
+        return response.Match(
+            responses => Ok(responses),
             errors => Problem(errors));
     }
     

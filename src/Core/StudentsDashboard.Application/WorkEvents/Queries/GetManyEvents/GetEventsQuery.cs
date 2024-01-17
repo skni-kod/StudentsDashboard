@@ -3,8 +3,8 @@ using ErrorOr;
 using StudentsDashboard.Application.WorkEvents.Queries.DTOs;
 using StudentsDashboard.Domain.WorkEvents.Enums;
 
-namespace StudentsDashboard.Application.WorkEvents.Queries.GetUnstartedEvents;
+namespace StudentsDashboard.Application.WorkEvents.Queries.GetManyEvents;
 
 public record GetEventsQuery(
-    DisplayData? display
+    DisplayEventsData? display
     ) : IRequest<ErrorOr<List<GetEventsDto>>>;

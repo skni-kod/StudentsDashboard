@@ -6,7 +6,7 @@ using StudentsDashboard.Application.WorkEvents.Queries.DTOs;
 using StudentsDashboard.Domain.Entities;
 using StudentsDashboard.Domain.WorkEvents.Enums;
 
-namespace StudentsDashboard.Application.WorkEvents.Queries.GetUnstartedEvents;
+namespace StudentsDashboard.Application.WorkEvents.Queries.GetManyEvents;
 
 public class GetEventsHandler : IRequestHandler<GetEventsQuery, ErrorOr<List<GetEventsDto>>>
 {
@@ -30,15 +30,15 @@ public class GetEventsHandler : IRequestHandler<GetEventsQuery, ErrorOr<List<Get
 
         IEnumerable<WorkEvent> events;
         
-        if (request.display == DisplayData.Started)
+        if (request.display == DisplayEventsData.Started)
         {
             events = await _workEventRepository.GetUnstartedEvents(currentDate, currentTime, (int)userId);
         }
-        else if(request.display == DisplayData.Unstarted)
+        else if(request.display == DisplayEventsData.Unstarted)
         {
             events = await _workEventRepository.GetEndedEvents(currentDate, currentTime, (int)userId);
         }
-        else if(request.display == DisplayData.Ongoing)
+        else if(request.display == DisplayEventsData.Ongoing)
         {
             events = await _workEventRepository.GetOngoingEvents(currentDate, currentTime, (int)userId);
         }
@@ -47,7 +47,7 @@ public class GetEventsHandler : IRequestHandler<GetEventsQuery, ErrorOr<List<Get
             events = await _workEventRepository.GetAllEvents((int)userId);
         }
 
-        if (events is null) return Errors.NotDataToDisplay.notDataToDisplay;
+        if (!events.Any()) return Errors.NotDataToDisplay.notDataToDisplay;
 
         var result = events.Select(e => e.AsDto()).ToList();
 

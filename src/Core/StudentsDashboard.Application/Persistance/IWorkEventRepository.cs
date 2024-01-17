@@ -12,4 +12,5 @@ public interface IWorkEventRepository
     Task<IEnumerable<WorkEvent>> GetEndedEvents(DateOnly currentDate, TimeOnly currentTime, int userId);
     Task<IEnumerable<WorkEvent>> GetOngoingEvents(DateOnly currentDate, TimeOnly currentTime, int userId);
     Task<IEnumerable<WorkEvent>> GetAllEvents(int userId);
+    Task<IEnumerable<WorkEvent>> GetEvent(int eventId);
 }

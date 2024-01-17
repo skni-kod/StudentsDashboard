@@ -57,8 +57,6 @@ public class WorkEventRepository : IWorkEventRepository
                          (e.From_Date == currentDate && 
                           e.From_Time > currentTime))).ToListAsync();
 
-        if (!result.Any()) result = null;
-
         return result;
     }
 
@@ -70,8 +68,6 @@ public class WorkEventRepository : IWorkEventRepository
                         (e.To_Date < currentDate ||
                         (e.To_Date == currentDate && 
                          e.To_Time < currentTime))).ToListAsync();
-        
-        if (!result.Any()) result = null;
         
         return result;
     }
@@ -87,17 +83,21 @@ public class WorkEventRepository : IWorkEventRepository
                         (e.From_Date < currentDate && e.To_Date == currentDate && e.To_Time >= currentTime))
                         ).ToListAsync();
 
-        if (!result.Any()) result = null;
-
         return result;
     }
 
     public async Task<IEnumerable<WorkEvent>> GetAllEvents(int userId)
     {
         var result = await _context.WorkEvents.Where(e => e.Id_Customer == userId).ToListAsync();
-
-        if (!result.Any()) result = null;
         
         return result;
     }
+
+    public async Task<IEnumerable<WorkEvent>> GetEvent(int eventId)
+    {
+        var result = await _context.WorkEvents.FindAsync(eventId);
+        
+        return new List<WorkEvent>() { result };
+    }
+
 }

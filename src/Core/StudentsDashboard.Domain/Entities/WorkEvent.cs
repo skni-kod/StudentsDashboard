@@ -10,4 +10,5 @@ public class WorkEvent
     public TimeOnly From_Time { get; set; }
     public DateOnly To_Date { get; set; }
     public TimeOnly To_Time { get; set; }
+    
 }
