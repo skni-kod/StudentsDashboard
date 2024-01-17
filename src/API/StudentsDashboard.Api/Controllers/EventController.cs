@@ -71,14 +71,14 @@ public class EventController : ApiController
             errors => Problem(errors));
     }
 
-    [HttpGet("GetUnstartedEvents")]
-    public async Task<IActionResult> GetUnstartedEvents()
+    [HttpGet("GetEvents")]
+    public async Task<IActionResult> GetEvents([FromQuery]GetEventsQuery query)
     {
-        var query = new GetUnstartedEventsQuery(DateOnly.FromDateTime(DateTime.Now), 
-            TimeOnly.FromDateTime(DateTime.Now));
-
         var respone = await _mediator.Send(query);
 
-        return Ok(respone);
+        return respone.Match(
+            respone => Ok(respone),
+            errors => Problem(errors));
     }
+    
 }

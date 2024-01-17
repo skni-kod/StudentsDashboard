@@ -20,14 +20,14 @@ public class EditWorkEventHandler : IRequestHandler<EditWorkEventCommand, ErrorO
 
     public async Task<ErrorOr<WorkEventResponse>> Handle(EditWorkEventCommand request, CancellationToken cancellationToken)
     {
-        var UserId = _userContextGetId.GetUserId;
+        var userId = _userContextGetId.GetUserId;
 
-        if (UserId is null)
+        if (userId is null)
         {
             return Errors.UserDoesNotLogged.userDoesNotLogged;
         }
 
-        var hasAccess = _workEventRepository.HasPermision((int)UserId, request.Id);
+        var hasAccess = await _workEventRepository.HasPermision((int)userId, request.Id);
 
         if (!hasAccess)
         {
@@ -44,7 +44,7 @@ public class EditWorkEventHandler : IRequestHandler<EditWorkEventCommand, ErrorO
             Location = request.Location
         };
 
-        _workEventRepository.editEvent(request.Id, workEvent);
+        await _workEventRepository.editEvent(request.Id, workEvent);
 
         return new WorkEventResponse("Event edited");
     }

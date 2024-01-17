@@ -4,9 +4,12 @@ namespace StudentsDashboard.Application.Persistance;
 
 public interface IWorkEventRepository
 {
-    void createEvent(WorkEvent newEvent);
-    void editEvent(int Id, WorkEvent editEvent);
-    bool HasPermision(int userId, int eventId);
-    void deleteEvent(int eventID);
-    IEnumerable<WorkEvent> GetUnstartedEvents(DateOnly currentDate, TimeOnly currentTime, int userId);
+    Task createEvent(WorkEvent newEvent);
+    Task editEvent(int Id, WorkEvent editEvent);
+    Task<bool> HasPermision(int userId, int eventId);
+    Task deleteEvent(int eventID);
+    Task<IEnumerable<WorkEvent>> GetUnstartedEvents(DateOnly currentDate, TimeOnly currentTime, int userId);
+    Task<IEnumerable<WorkEvent>> GetEndedEvents(DateOnly currentDate, TimeOnly currentTime, int userId);
+    Task<IEnumerable<WorkEvent>> GetOngoingEvents(DateOnly currentDate, TimeOnly currentTime, int userId);
+    Task<IEnumerable<WorkEvent>> GetAllEvents(int userId);
 }

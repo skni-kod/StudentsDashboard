@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Domain.Entities;
 
@@ -12,15 +13,15 @@ public class WorkEventRepository : IWorkEventRepository
         _context = context;
     }
 
-    public void createEvent(WorkEvent newEvent)
+    public async Task createEvent(WorkEvent newEvent)
     {
-        _context.WorkEvents.Add(newEvent);
-        _context.SaveChanges();
+        await _context.WorkEvents.AddAsync(newEvent);
+        await _context.SaveChangesAsync();
     }
     
-    public void editEvent(int Id, WorkEvent editEvent)
+    public async Task editEvent(int id, WorkEvent editEvent)
     {
-        var result = _context.WorkEvents.FirstOrDefault(x => x.Id_Event == Id);
+        var result = await _context.WorkEvents.FindAsync(id);
 
         if (result.Title != editEvent.Title) result.Title = editEvent.Title;
         if (result.From_Date != editEvent.From_Date) result.From_Date = editEvent.From_Date;
@@ -29,33 +30,74 @@ public class WorkEventRepository : IWorkEventRepository
         if (result.To_Time != editEvent.To_Time) result.To_Time = editEvent.To_Time;
         if (result.Location != editEvent.Location) result.Location = editEvent.Location;
 
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
     }
     
-    public bool HasPermision(int userId, int eventId)
+    public async Task<bool> HasPermision(int userId, int eventId)
     {
-        var result = _context.WorkEvents.FirstOrDefault(x => x.Id_Event == eventId);
+        var result = await _context.WorkEvents.FindAsync(eventId);
 
         return result != null && result.Id_Customer == userId;
     }
 
-    public void deleteEvent(int eventID)
+    public async Task deleteEvent(int eventId)
     {
-        var result = _context.WorkEvents.SingleOrDefault(x => x.Id_Event == eventID);
+        var result = await _context.WorkEvents.FindAsync(eventId);
 
         _context.WorkEvents.Remove(result);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public IEnumerable<WorkEvent> GetUnstartedEvents(DateOnly currentDate, TimeOnly currentTime, int userId)
+    public async Task<IEnumerable<WorkEvent>> GetUnstartedEvents(DateOnly currentDate, TimeOnly currentTime, int userId)
     {
-        var result = _context.WorkEvents
-            .Where(e => (e.From_Date > currentDate ||
-                         (e.From_Date == currentDate && e.From_Time > currentTime)) &&
-                        e.Id_Customer == userId)
-            .ToList();
+        var result = await _context.WorkEvents
+            .Where(e => (e.Id_Customer == userId) && 
+                         (e.From_Date > currentDate || 
+                         (e.From_Date == currentDate && 
+                          e.From_Time > currentTime))).ToListAsync();
 
+        if (!result.Any()) result = null;
+
+        return result;
+    }
+
+    public async Task<IEnumerable<WorkEvent>> GetEndedEvents(DateOnly currentDate, TimeOnly currentTime, int userId)
+    {
+        var result = await _context.WorkEvents
+            .Where(e =>
+                         e.Id_Customer == userId && 
+                        (e.To_Date < currentDate ||
+                        (e.To_Date == currentDate && 
+                         e.To_Time < currentTime))).ToListAsync();
+        
+        if (!result.Any()) result = null;
+        
+        return result;
+    }
+
+    public async Task<IEnumerable<WorkEvent>> GetOngoingEvents(DateOnly currentDate, TimeOnly currentTime, int userId)
+    {
+        var result = await _context.WorkEvents
+            .Where(e => 
+                         e.Id_Customer == userId &&
+                        ((e.From_Date < currentDate && e.To_Date > currentDate) || 
+                        (e.From_Date == currentDate && e.To_Date == currentDate && e.From_Time <= currentTime && e.To_Time >= currentTime) ||
+                        (e.From_Date == currentDate && e.To_Date > currentDate && e.From_Time <= currentTime) || 
+                        (e.From_Date < currentDate && e.To_Date == currentDate && e.To_Time >= currentTime))
+                        ).ToListAsync();
+
+        if (!result.Any()) result = null;
+
+        return result;
+    }
+
+    public async Task<IEnumerable<WorkEvent>> GetAllEvents(int userId)
+    {
+        var result = await _context.WorkEvents.Where(e => e.Id_Customer == userId).ToListAsync();
+
+        if (!result.Any()) result = null;
+        
         return result;
     }
 }

@@ -21,16 +21,16 @@ public class AddWorkEventHandler : IRequestHandler<AddWorkEventCommand, ErrorOr<
 
     public async Task<ErrorOr<WorkEventResponse>> Handle(AddWorkEventCommand request, CancellationToken cancellationToken)
     {
-        var UserId = _userContextGetId.GetUserId;
+        var userId = _userContextGetId.GetUserId;
 
-        if (UserId is null)
+        if (userId is null)
         {
             return Errors.UserDoesNotLogged.userDoesNotLogged;
         }
         
         var workEvent = new WorkEvent
         {
-            Id_Customer = (int)UserId,
+            Id_Customer = (int)userId,
             Title = request.Title,
             From_Date = request.FromDate,
             From_Time = request.FromTime,
@@ -39,7 +39,7 @@ public class AddWorkEventHandler : IRequestHandler<AddWorkEventCommand, ErrorOr<
             Location = request.Location
         };
 
-        _workEventRepository.createEvent(workEvent);
+        await _workEventRepository.createEvent(workEvent);
 
         return new WorkEventResponse("Event added");
 
