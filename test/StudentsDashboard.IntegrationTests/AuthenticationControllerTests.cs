@@ -55,4 +55,28 @@ public class AuthenticationControllerTests : IClassFixture<WebApplicationFactory
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
+    
+    [Fact]
+    public async Task RegisterUser_ForInvalidModel_ReturnsBadRequest()
+    {
+        // arrange
+
+        var registerUser = new RegisterRequest(
+            FirstName: "Jan",
+            LastName: "Nowak",
+            Email: "test.com",
+            Password: "qwerty",
+            ConfirmPassword: ""
+        );
+
+        var httpContent = registerUser.ToJsonHttpContent();
+        
+        // act
+
+        var response = await _client.PostAsync("/api/auth/register", httpContent);
+        
+        // assert 
+
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
 }
