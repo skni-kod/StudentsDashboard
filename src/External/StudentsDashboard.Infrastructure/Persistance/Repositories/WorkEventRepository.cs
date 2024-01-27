@@ -7,10 +7,12 @@ namespace StudentsDashboard.Infrastructure.Persistance.Repositories;
 public class WorkEventRepository : IWorkEventRepository
 {
     private readonly StudentsDashboardDbContext _context;
+    private readonly IDateService _dateService;
 
-    public WorkEventRepository(StudentsDashboardDbContext context)
+    public WorkEventRepository(StudentsDashboardDbContext context, IDateService dateService)
     {
         _context = context;
+        _dateService = dateService;
     }
 
     public async Task createEvent(WorkEvent newEvent)
@@ -49,38 +51,38 @@ public class WorkEventRepository : IWorkEventRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<WorkEvent>> GetUnstartedEvents(DateOnly currentDate, TimeOnly currentTime, int userId)
+    public async Task<IEnumerable<WorkEvent>> GetUnstartedEvents(int userId)
     {
         var result = await _context.WorkEvents
             .Where(e => (e.Id_Customer == userId) && 
-                         (e.From_Date > currentDate || 
-                         (e.From_Date == currentDate && 
-                          e.From_Time > currentTime))).ToListAsync();
+                         (e.From_Date > _dateService.CurrentDateOnly() || 
+                         (e.From_Date == _dateService.CurrentDateOnly() && 
+                          e.From_Time > _dateService.CurrentTimeOnly()))).ToListAsync();
 
         return result;
     }
 
-    public async Task<IEnumerable<WorkEvent>> GetEndedEvents(DateOnly currentDate, TimeOnly currentTime, int userId)
+    public async Task<IEnumerable<WorkEvent>> GetEndedEvents(int userId)
     {
         var result = await _context.WorkEvents
             .Where(e =>
                          e.Id_Customer == userId && 
-                        (e.To_Date < currentDate ||
-                        (e.To_Date == currentDate && 
-                         e.To_Time < currentTime))).ToListAsync();
+                        (e.To_Date < _dateService.CurrentDateOnly() ||
+                        (e.To_Date == _dateService.CurrentDateOnly() && 
+                         e.To_Time < _dateService.CurrentTimeOnly()))).ToListAsync();
         
         return result;
     }
 
-    public async Task<IEnumerable<WorkEvent>> GetOngoingEvents(DateOnly currentDate, TimeOnly currentTime, int userId)
+    public async Task<IEnumerable<WorkEvent>> GetOngoingEvents(int userId)
     {
         var result = await _context.WorkEvents
             .Where(e => 
                          e.Id_Customer == userId &&
-                        ((e.From_Date < currentDate && e.To_Date > currentDate) || 
-                        (e.From_Date == currentDate && e.To_Date == currentDate && e.From_Time <= currentTime && e.To_Time >= currentTime) ||
-                        (e.From_Date == currentDate && e.To_Date > currentDate && e.From_Time <= currentTime) || 
-                        (e.From_Date < currentDate && e.To_Date == currentDate && e.To_Time >= currentTime))
+                        ((e.From_Date < _dateService.CurrentDateOnly() && e.To_Date > _dateService.CurrentDateOnly()) || 
+                        (e.From_Date == _dateService.CurrentDateOnly() && e.To_Date == _dateService.CurrentDateOnly() && e.From_Time <= _dateService.CurrentTimeOnly() && e.To_Time >= _dateService.CurrentTimeOnly()) ||
+                        (e.From_Date == _dateService.CurrentDateOnly() && e.To_Date > _dateService.CurrentDateOnly() && e.From_Time <= _dateService.CurrentTimeOnly()) || 
+                        (e.From_Date < _dateService.CurrentDateOnly() && e.To_Date == _dateService.CurrentDateOnly() && e.To_Time >= _dateService.CurrentTimeOnly()))
                         ).ToListAsync();
 
         return result;

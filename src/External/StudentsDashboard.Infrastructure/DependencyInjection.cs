@@ -19,8 +19,8 @@ public static class DependencyInjection
                     r.MigrationsAssembly(typeof(AssemblyReference).Assembly.ToString())));
 
         services.AddScoped<IWorkTaskRepository, WorkTaskRepository>();
-        
         services.AddScoped<IWorkEventRepository, WorkEventRepository>();
+        services.AddScoped<IDateService, DateService>();
 
         services.AddHttpContextAccessor();
 

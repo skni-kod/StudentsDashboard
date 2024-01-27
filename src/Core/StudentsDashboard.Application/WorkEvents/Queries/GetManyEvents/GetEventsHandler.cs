@@ -25,22 +25,19 @@ public class GetEventsHandler : IRequestHandler<GetEventsQuery, ErrorOr<List<Get
 
         if (userId is null) return Errors.UserDoesNotLogged.userDoesNotLogged;
 
-        DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
-        TimeOnly currentTime = TimeOnly.FromDateTime(DateTime.Now);
-
         IEnumerable<WorkEvent> events;
         
         if (request.display == DisplayEventsData.Started)
         {
-            events = await _workEventRepository.GetUnstartedEvents(currentDate, currentTime, (int)userId);
+            events = await _workEventRepository.GetUnstartedEvents((int)userId);
         }
         else if(request.display == DisplayEventsData.Unstarted)
         {
-            events = await _workEventRepository.GetEndedEvents(currentDate, currentTime, (int)userId);
+            events = await _workEventRepository.GetEndedEvents((int)userId);
         }
         else if(request.display == DisplayEventsData.Ongoing)
         {
-            events = await _workEventRepository.GetOngoingEvents(currentDate, currentTime, (int)userId);
+            events = await _workEventRepository.GetOngoingEvents((int)userId);
         }
         else
         {
