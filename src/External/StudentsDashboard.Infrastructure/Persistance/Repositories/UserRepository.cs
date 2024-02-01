@@ -25,10 +25,12 @@ public class UserRepository : IUserRepository
         return isExist;
     }
 
-    public void Add(User user)
+    public int Add(User user)
     {
         user.Password = BC.HashPassword(user.Password);
         _dbContext.Users.Add(user);
         _dbContext.SaveChanges();
+
+        return user.Id;
     }
 }

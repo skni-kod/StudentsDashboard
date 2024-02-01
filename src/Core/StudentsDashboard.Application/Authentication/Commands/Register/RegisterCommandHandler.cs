@@ -32,8 +32,8 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<R
             Password = request.Password
         };
         
-        _userRepository.Add(user);
+        var id = _userRepository.Add(user);
 
-        return new RegisterResponse("Registration completed");
+        return new RegisterResponse(id);
     }
 }
