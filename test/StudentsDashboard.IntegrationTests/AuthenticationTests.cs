@@ -9,9 +9,9 @@ using StudentsDashboard.IntegrationTests.Helpers;
 
 namespace StudentsDashboard.IntegrationTests;
 
-public class AuthenticationControllerTests : BaseIntegrationTest
+public class AuthenticationTests : BaseIntegrationTest
 {
-    public AuthenticationControllerTests(IntegrationTestWebAppFactory factory) : base(factory)
+    public AuthenticationTests(IntegrationTestWebAppFactory factory) : base(factory)
     {
     }
 

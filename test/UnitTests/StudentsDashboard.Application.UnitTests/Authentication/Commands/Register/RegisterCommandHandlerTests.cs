@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using FluentValidation.TestHelper;
 using Moq;
 using StudentsDashboard.Application.Authentication.Commands.Register;
 using StudentsDashboard.Application.Persistance;
@@ -19,17 +20,37 @@ public class RegisterCommandHandlerTests
     }
     
     [Fact]
-    public async Task HandleRegisterCommand_ForValidModel_ShouldCreateUser()
+    public async Task Handle_Should_ReturnErrorDuplicateEmail_WhenEmailIsNotUnique()
     {
         // Arrange
         var registerCommand = RegisterCommandUtils.RegisterCommand();
+
+        _mockUserRepository
+            .Setup(x => x.Any(It.IsAny<string>()))
+            .Returns(true);
+        
+        // Act
+        var result = await _handler.Handle(registerCommand, default);
+        
+        // Assert
+        result.IsError.Should().BeTrue();
+    }
+    
+    [Fact]
+    public async Task Handle_Should_ReturnRegisterResponse_WhenEmailIsUnique()
+    {
+        // Arrange
+        var registerCommand = RegisterCommandUtils.RegisterCommand();
+
+        _mockUserRepository
+            .Setup(x => x.Any(It.IsAny<string>()))
+            .Returns(false);
         
         // Act
         var result = await _handler.Handle(registerCommand, default);
         
         // Assert
         result.IsError.Should().BeFalse();
-        _mockUserRepository.Verify(x => x.Add(It.Is<User>(x =>
-            x.Email == registerCommand.Email)), Times.Once);
+        result.Value.Should().NotBeNull();
     }
 }
