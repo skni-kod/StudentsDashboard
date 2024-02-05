@@ -24,14 +24,14 @@ public class EditWorkEventHandler : IRequestHandler<EditWorkEventCommand, ErrorO
 
         if (userId is null)
         {
-            return Errors.UserDoesNotLogged.userDoesNotLogged;
+            return Errors.WorkEvent.userDoesNotLogged;
         }
 
         var hasAccess = await _workEventRepository.HasPermision((int)userId, request.Id);
 
         if (!hasAccess)
         {
-            return Errors.OwnerError.ownerError;
+            return Errors.WorkEvent.ownerError;
         }
         
         var workEvent = new WorkEvent

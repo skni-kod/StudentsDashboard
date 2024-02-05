@@ -22,11 +22,11 @@ public class DeleteWorkEventHandler : IRequestHandler<DeleteWorkEventCommand, Er
     {
         var userId = _userContextGetId.GetUserId;
 
-        if (userId is null) return Errors.UserDoesNotLogged.userDoesNotLogged;
+        if (userId is null) return Errors.WorkEvent.userDoesNotLogged;
 
         var hasAcces = await _workEventRepository.HasPermision((int)userId, request.id);
 
-        if (!hasAcces) return Errors.OwnerError.ownerError;
+        if (!hasAcces) return Errors.WorkEvent.ownerError;
         
         await _workEventRepository.deleteEvent(request.id);
 

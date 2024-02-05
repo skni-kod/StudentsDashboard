@@ -23,7 +23,7 @@ public class GetEventsHandler : IRequestHandler<GetEventsQuery, ErrorOr<List<Get
     {
         var userId = _userContextGetId.GetUserId;
 
-        if (userId is null) return Errors.UserDoesNotLogged.userDoesNotLogged;
+        if (userId is null) return Errors.WorkEvent.userDoesNotLogged;
 
         IEnumerable<WorkEvent> events;
         
@@ -44,7 +44,7 @@ public class GetEventsHandler : IRequestHandler<GetEventsQuery, ErrorOr<List<Get
             events = await _workEventRepository.GetAllEvents((int)userId);
         }
 
-        if (!events.Any()) return Errors.NotDataToDisplay.notDataToDisplay;
+        if (!events.Any()) return Errors.WorkEvent.notDataToDisplay;
 
         var result = events.Select(e => e.AsDto()).ToList();
 

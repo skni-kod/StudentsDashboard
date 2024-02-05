@@ -25,7 +25,7 @@ public class AddWorkEventHandler : IRequestHandler<AddWorkEventCommand, ErrorOr<
 
         if (userId is null)
         {
-            return Errors.UserDoesNotLogged.userDoesNotLogged;
+            return Errors.WorkEvent.userDoesNotLogged;
         }
         
         var workEvent = new WorkEvent

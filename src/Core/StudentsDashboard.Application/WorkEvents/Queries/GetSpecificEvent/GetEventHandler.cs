@@ -22,11 +22,11 @@ public class GetEventHandler : IRequestHandler<GetEventQuery, ErrorOr<List<GetEv
     {
         var userId = _userContextGetId.GetUserId;
 
-        if (userId is null) return Errors.UserDoesNotLogged.userDoesNotLogged;
+        if (userId is null) return Errors.WorkEvent.userDoesNotLogged;
 
         var events = await _workEventRepository.GetEvent(request.id);
 
-        if (!events.Any()) return Errors.NotDataToDisplay.notDataToDisplay;
+        if (!events.Any()) return Errors.WorkEvent.notDataToDisplay;
 
         var result = events.Select(e => e.AsDto()).ToList();
 
