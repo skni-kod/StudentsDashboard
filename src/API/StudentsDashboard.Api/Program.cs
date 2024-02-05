@@ -28,9 +28,11 @@ var app = builder.Build();
         app.UseSwaggerUI();
     }
 
+    
     app.UseExceptionHandler("/error");
     app.UseHttpsRedirection();
     app.UseAuthorization();
+    app.ApplyPendingMigrations();
     app.MapControllers();
     app.Run();
 }

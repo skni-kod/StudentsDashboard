@@ -1,0 +1,40 @@
+﻿version: '3.4'
+
+services: 
+  api:
+    image: ${DOCKER_REGISTRY-}studentsapi
+    container_name: api
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+    ports:
+      - 5000:80
+      - 5001:81
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5000
+      - ASPNETCORE_HTTPS_PORTS=5001
+      - ConnectionStrings__Default=Host=db;Port=5432;Database=studentsdashboard;Username=postgres;Password=postgres
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    user: root
+    depends_on: 
+      - db
+  
+  db:
+    image: postgres:latest
+    container_name: db
+    environment:
+      - POSTGRES_DB=studentsdashboard
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    restart: always
+    
+volumes: 
+  pgdata:
+    external: true

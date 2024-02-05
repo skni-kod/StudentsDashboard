@@ -6,6 +6,7 @@ using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Infrastructure.Authentication;
 using StudentsDashboard.Infrastructure.Persistance;
 using StudentsDashboard.Infrastructure.Persistance.Repositories;
+using StudentsDashboard.Infrastructure.Persistance.Seeders;
 
 namespace StudentsDashboard.Infrastructure;
 
@@ -20,7 +21,9 @@ public static class DependencyInjection
             options.UseNpgsql(configuration.GetConnectionString("Default"),
                 r =>
                     r.MigrationsAssembly(typeof(AssemblyReference).Assembly.ToString())));
+            
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<Seeder>();
         return services;
     }
 }
