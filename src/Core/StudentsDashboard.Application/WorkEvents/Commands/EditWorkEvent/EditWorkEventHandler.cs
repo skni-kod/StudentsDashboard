@@ -24,14 +24,14 @@ public class EditWorkEventHandler : IRequestHandler<EditWorkEventCommand, ErrorO
 
         if (userId is null)
         {
-            return Errors.WorkEvent.userDoesNotLogged;
+            return Errors.WorkEvent.UserDoesNotLogged;
         }
 
         var hasAccess = await _workEventRepository.HasPermision((int)userId, request.Id);
 
         if (!hasAccess)
         {
-            return Errors.WorkEvent.ownerError;
+            return Errors.WorkEvent.OwnerError;
         }
         
         var workEvent = new WorkEvent
@@ -44,7 +44,7 @@ public class EditWorkEventHandler : IRequestHandler<EditWorkEventCommand, ErrorO
             Location = request.Location
         };
 
-        await _workEventRepository.editEvent(request.Id, workEvent);
+        await _workEventRepository.EditEvent(request.Id, workEvent);
 
         return new WorkEventResponse("Event edited");
     }

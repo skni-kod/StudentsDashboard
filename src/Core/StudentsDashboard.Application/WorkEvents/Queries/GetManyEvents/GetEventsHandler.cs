@@ -23,19 +23,19 @@ public class GetEventsHandler : IRequestHandler<GetEventsQuery, ErrorOr<List<Get
     {
         var userId = _userContextGetId.GetUserId;
 
-        if (userId is null) return Errors.WorkEvent.userDoesNotLogged;
+        if (userId is null) return Errors.WorkEvent.UserDoesNotLogged;
 
         IEnumerable<WorkEvent> events;
         
-        if (request.display == DisplayEventsData.Started)
+        if (request.Display == DisplayEventsData.Started)
         {
             events = await _workEventRepository.GetUnstartedEvents((int)userId);
         }
-        else if(request.display == DisplayEventsData.Unstarted)
+        else if(request.Display == DisplayEventsData.Unstarted)
         {
             events = await _workEventRepository.GetEndedEvents((int)userId);
         }
-        else if(request.display == DisplayEventsData.Ongoing)
+        else if(request.Display == DisplayEventsData.Ongoing)
         {
             events = await _workEventRepository.GetOngoingEvents((int)userId);
         }
@@ -44,7 +44,7 @@ public class GetEventsHandler : IRequestHandler<GetEventsQuery, ErrorOr<List<Get
             events = await _workEventRepository.GetAllEvents((int)userId);
         }
 
-        if (!events.Any()) return Errors.WorkEvent.notDataToDisplay;
+        if (!events.Any()) return Errors.WorkEvent.NotDataToDisplay;
 
         var result = events.Select(e => e.AsDto()).ToList();
 

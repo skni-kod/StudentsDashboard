@@ -6,5 +6,5 @@ using StudentsDashboard.Application.WorkEvents.Queries.DTOs;
 namespace StudentsDashboard.Application.WorkEvents.Queries.GetSpecificEvent;
 
 public record GetEventQuery(
-    int id
+    int Id
     ) : IRequest<ErrorOr<List<GetEventsDto>>>;

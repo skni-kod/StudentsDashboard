@@ -11,7 +11,7 @@ using StudentsDashboard.Application.WorkEvents.Queries.GetSpecificEvent;
 namespace StudentsDashboard.Api.Controllers;
 
 [ApiController]
-[Route("api/Events")]
+[Route("api/events")]
 public class EventController : ApiController
 {
     private readonly ISender _mediator;
@@ -21,7 +21,12 @@ public class EventController : ApiController
         _mediator = mediator;
     }
 
-    [HttpPost("AddWorkEvent")]
+    /// <summary>
+    /// Add new event
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [HttpPost]
     public async Task<IActionResult> AddWorkEvent([FromBody] WorkEventRequest request)
     {
         var command = new AddWorkEventCommand(
@@ -36,11 +41,17 @@ public class EventController : ApiController
         var response = await _mediator.Send(command);
 
         return response.Match(
-            WorkEventResponse => Ok(WorkEventResponse), 
+            responses => Ok(responses), 
             errors => Problem(errors));
     }
     
-    [HttpPut("EditWorkEvent/{id}")]
+    /// <summary>
+    /// Editing an existing event
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpPut("{id}")]
     public async Task<IActionResult> EditWorkEvent([FromBody] WorkEventRequest request, [FromRoute] int id)
     {
         var command = new EditWorkEventCommand(
@@ -56,11 +67,16 @@ public class EventController : ApiController
         var response = await _mediator.Send(command);
 
         return response.Match(
-            WorkEventResponse => Ok(WorkEventResponse),
+            responses => Ok(responses),
             errors => Problem(errors));
     }
 
-    [HttpDelete("DeleteWorkEvent/{id}")]
+    /// <summary>
+    /// Delete an existing event
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteWorkEvent([FromRoute] int id)
     {
         var command = new DeleteWorkEventCommand(id);
@@ -68,21 +84,32 @@ public class EventController : ApiController
         var response = await _mediator.Send(command);
 
         return response.Match(
-            WorkEventResponse => Ok(WorkEventResponse),
+            responses => Ok(responses),
             errors => Problem(errors));
     }
 
-    [HttpGet("GetEvents")]
+    /// <summary>
+    /// Display all events
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    [HttpGet]
     public async Task<IActionResult> GetEvents([FromQuery]GetEventsQuery query)
     {
         var respone = await _mediator.Send(query);
 
         return respone.Match(
-            respones => Ok(respones),
+            responses => Ok(responses),
             errors => Problem(errors));
     }
 
-    [HttpGet("GetEvent/{id}")]
+    
+    /// <summary>
+    /// Display one specific event
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetEvent([FromRoute]GetEventQuery query)
     {
         var response = await _mediator.Send(query);

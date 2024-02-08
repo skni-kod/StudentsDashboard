@@ -25,7 +25,7 @@ public class AddWorkEventHandler : IRequestHandler<AddWorkEventCommand, ErrorOr<
 
         if (userId is null)
         {
-            return Errors.WorkEvent.userDoesNotLogged;
+            return Errors.WorkEvent.UserDoesNotLogged;
         }
         
         var workEvent = new WorkEvent
@@ -39,7 +39,7 @@ public class AddWorkEventHandler : IRequestHandler<AddWorkEventCommand, ErrorOr<
             Location = request.Location
         };
 
-        await _workEventRepository.createEvent(workEvent);
+        await _workEventRepository.CreateEvent(workEvent);
 
         return new WorkEventResponse("Event added");
 

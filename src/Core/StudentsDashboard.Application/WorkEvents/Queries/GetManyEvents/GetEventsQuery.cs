@@ -6,5 +6,5 @@ using StudentsDashboard.Domain.WorkEvents.Enums;
 namespace StudentsDashboard.Application.WorkEvents.Queries.GetManyEvents;
 
 public record GetEventsQuery(
-    DisplayEventsData? display
+    DisplayEventsData? Display
     ) : IRequest<ErrorOr<List<GetEventsDto>>>;

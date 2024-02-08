@@ -15,13 +15,13 @@ public class WorkEventRepository : IWorkEventRepository
         _dateService = dateService;
     }
 
-    public async Task createEvent(WorkEvent newEvent)
+    public async Task CreateEvent(WorkEvent newEvent)
     {
         await _context.WorkEvents.AddAsync(newEvent);
         await _context.SaveChangesAsync();
     }
     
-    public async Task editEvent(int id, WorkEvent editEvent)
+    public async Task EditEvent(int id, WorkEvent editEvent)
     {
         var result = await _context.WorkEvents.FindAsync(id);
 
@@ -43,7 +43,7 @@ public class WorkEventRepository : IWorkEventRepository
         return result != null && result.Id_Customer == userId;
     }
 
-    public async Task deleteEvent(int eventId)
+    public async Task DeleteEvent(int eventId)
     {
         var result = await _context.WorkEvents.FindAsync(eventId);
 
