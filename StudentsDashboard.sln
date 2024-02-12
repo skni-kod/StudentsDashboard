@@ -13,25 +13,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{DD6A2986-A4A
 		src\API\Dockerfile = src\API\Dockerfile
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsDashboard.Api", "src\API\StudentsDashboard.Api\StudentsDashboard.Api.csproj", "{7D788DD1-EFAA-49DC-8BCD-9E3A94A63941}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsDashboard.Api", "src\API\StudentsDashboard.Api\StudentsDashboard.Api.csproj", "{7D788DD1-EFAA-49DC-8BCD-9E3A94A63941}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{73447460-758D-4AA8-8737-60740E2051F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsDashboard.Application", "src\Core\StudentsDashboard.Application\StudentsDashboard.Application.csproj", "{7D1885F5-D08F-4FCF-9887-DD9C4966FE9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsDashboard.Application", "src\Core\StudentsDashboard.Application\StudentsDashboard.Application.csproj", "{7D1885F5-D08F-4FCF-9887-DD9C4966FE9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsDashboard.Domain", "src\Core\StudentsDashboard.Domain\StudentsDashboard.Domain.csproj", "{E7A4823D-25E2-4A55-9789-7360E12B3AF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsDashboard.Domain", "src\Core\StudentsDashboard.Domain\StudentsDashboard.Domain.csproj", "{E7A4823D-25E2-4A55-9789-7360E12B3AF5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D49001D6-6992-4D6F-B8FB-8E54A2069C02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsDashboard.IntegrationTests", "test\StudentsDashboard.IntegrationTests\StudentsDashboard.IntegrationTests.csproj", "{289A66C9-4DB6-4D60-A963-F4672CEA8221}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsDashboard.IntegrationTests", "test\StudentsDashboard.IntegrationTests\StudentsDashboard.IntegrationTests.csproj", "{289A66C9-4DB6-4D60-A963-F4672CEA8221}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{2A2400D8-8BD0-4E53-B0C9-E1EB6A81C638}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsDashboard.Infrastructure", "src\External\StudentsDashboard.Infrastructure\StudentsDashboard.Infrastructure.csproj", "{D86D8D1F-5D7A-4BEB-90B7-AC0D1BF447CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsDashboard.Infrastructure", "src\External\StudentsDashboard.Infrastructure\StudentsDashboard.Infrastructure.csproj", "{D86D8D1F-5D7A-4BEB-90B7-AC0D1BF447CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsDashboard.Presentation", "src\External\StudentsDashboard.Presentation\StudentsDashboard.Presentation.csproj", "{BB068E2C-399E-481E-A192-E15104D326BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsDashboard.Presentation", "src\External\StudentsDashboard.Presentation\StudentsDashboard.Presentation.csproj", "{BB068E2C-399E-481E-A192-E15104D326BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsDashboard.CleanArchitectureTests", "test\StudentsDashboard.CleanArchitectureTests\StudentsDashboard.CleanArchitectureTests.csproj", "{F3154E11-6DFB-46EA-A3E4-01F05185E9F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsDashboard.CleanArchitectureTests", "test\StudentsDashboard.CleanArchitectureTests\StudentsDashboard.CleanArchitectureTests.csproj", "{F3154E11-6DFB-46EA-A3E4-01F05185E9F6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{75E94449-0883-4704-84CD-73B3AA0DD9B0}"
 EndProject
@@ -43,9 +43,6 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7D788DD1-EFAA-49DC-8BCD-9E3A94A63941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -84,6 +81,9 @@ Global
 		{03D33E66-7D66-4E6F-AC4B-849896BE0631}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03D33E66-7D66-4E6F-AC4B-849896BE0631}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03D33E66-7D66-4E6F-AC4B-849896BE0631}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DD6A2986-A4A4-4DB4-B98C-10DE1026F242} = {3F317785-2579-4090-AE41-8E6A4B758D5C}

@@ -7,6 +7,7 @@
     <UserSecretsId>3b9d7a26-d645-4149-b402-eec866712e23</UserSecretsId>
   </PropertyGroup>
 
+<<<<<<< HEAD
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
@@ -17,6 +18,39 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\StudentsDashboard.Application\StudentsDashboard.Application.csproj" />
+    <ProjectReference Include="..\..\External\StudentsDashboard.Infrastructure\StudentsDashboard.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\External\StudentsDashboard.Presentation\StudentsDashboard.Presentation.csproj" />
+  </ItemGroup>
+=======
+	<ItemGroup>
+		<PackageReference Include="MediatR" Version="12.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.14">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	</ItemGroup>
+
+>>>>>>> main
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Core\StudentsDashboard.Application\StudentsDashboard.Application.csproj" />
+		<ProjectReference Include="..\..\External\StudentsDashboard.Infrastructure\StudentsDashboard.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\External\StudentsDashboard.Presentation\StudentsDashboard.Presentation.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="MediatR" Version="12.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.14">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\StudentsDashboard.Application\StudentsDashboard.Application.csproj" />
     <ProjectReference Include="..\..\External\StudentsDashboard.Infrastructure\StudentsDashboard.Infrastructure.csproj" />

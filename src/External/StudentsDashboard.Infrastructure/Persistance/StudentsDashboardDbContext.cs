@@ -13,6 +13,10 @@ public class StudentsDashboardDbContext : DbContext
 
     public DbSet<User> Users { get; set; }
     
+    public DbSet<WorkTask> WorkTasks { get; set; }
+    
+    public DbSet<WorkEvent> WorkEvents { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // User
