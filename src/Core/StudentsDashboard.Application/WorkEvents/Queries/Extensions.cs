@@ -9,7 +9,7 @@ public static class Extensions
     {
         return new GetEventsDto
         {
-            Id = events.Id_Event,
+            Id = events.Id,
             Title = events.Title,
             FromDate = events.From_Date,
             FromTime = events.From_Time,
