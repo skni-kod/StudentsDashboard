@@ -23,7 +23,7 @@ namespace StudentsDashboard.Application.WorkTasks.Commands.GetWorkTask
         public async Task<ErrorOr<WorkTaskResponse>> Handle(GetWorkTaskCommand request, CancellationToken cancellationToken)
         {
 
-            _workTaskRepository.getTask(request.IdUser,request.Id);
+            _workTaskRepository.GetTask(request.IdUser,request.Id);
 
             return new WorkTaskResponse("Task all user");
         }

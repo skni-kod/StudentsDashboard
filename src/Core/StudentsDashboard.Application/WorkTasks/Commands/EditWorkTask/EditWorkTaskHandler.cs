@@ -27,7 +27,7 @@ namespace StudentsDashboard.Application.WorkTasks.Commands.EditWorkTask
                 Date = request.Date
             };
 
-            _workTaskRepository.editTask(request.Id,workTask);
+            _workTaskRepository.EditTask(request.Id,workTask);
 
             return new WorkTaskResponse("Task edited");
         }

@@ -21,7 +21,7 @@ namespace StudentsDashboard.Application.WorkTasks.Commands.GetAllWorkTask
         public async Task<ErrorOr<WorkTaskResponse>> Handle(GetAllWorkTaskCommand request, CancellationToken cancellationToken)
         {
 
-            _workTaskRepository.getAllTask(request.IdUser);
+            _workTaskRepository.GetAllTask(request.IdUser);
 
             return new WorkTaskResponse("Task all user");
         }

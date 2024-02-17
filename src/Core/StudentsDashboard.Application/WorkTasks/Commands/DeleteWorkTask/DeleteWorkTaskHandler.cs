@@ -23,7 +23,7 @@ namespace StudentsDashboard.Application.WorkTasks.Commands.DeleteWorkTask
 
             int Id = request.Id;
 
-            _workTaskRepository.deleteTask(Id);
+            _workTaskRepository.DeleteTask(Id);
 
             return new WorkTaskResponse("Task delete");
         }

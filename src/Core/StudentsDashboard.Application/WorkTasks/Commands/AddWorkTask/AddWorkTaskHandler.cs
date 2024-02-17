@@ -27,7 +27,7 @@ namespace StudentsDashboard.Application.WorkTasks.Commands.AddWorkTask
                 Date = request.Date
             };
 
-            _workTaskRepository.createTask(workTask);
+            _workTaskRepository.CreateTask(workTask);
 
             return new WorkTaskResponse("Task added");
         }

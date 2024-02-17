@@ -12,13 +12,13 @@ public class WorkTaskRepository : IWorkTaskRepository
         _dbContext = dbContext;
     }
 
-    public void createTask(WorkTask newTask)
+    public void CreateTask(WorkTask newTask)
     {
         _dbContext.WorkTasks.Add(newTask);
         _dbContext.SaveChanges();
     }
 
-    public void deleteTask(int Id)
+    public void DeleteTask(int Id)
     {
         var result = _dbContext.WorkTasks.SingleOrDefault(c => c.Id_Task == Id);
 
@@ -27,7 +27,7 @@ public class WorkTaskRepository : IWorkTaskRepository
         _dbContext.SaveChanges();
     }
 
-    public void editTask(int Id, WorkTask editedTask)
+    public void EditTask(int Id, WorkTask editedTask)
     {
         var result = _dbContext.WorkTasks.FirstOrDefault(c => c.Id_Task == Id);
 
@@ -47,7 +47,7 @@ public class WorkTaskRepository : IWorkTaskRepository
         _dbContext.SaveChanges();
     }
 
-    public IEnumerable<WorkTask> getAllTask(int IdUSer)
+    public IEnumerable<WorkTask> GetAllTask(int IdUSer)
     {
         var taskList = _dbContext.WorkTasks.ToList().
                         FindAll(l => l.Id_Customer == IdUSer);
@@ -55,7 +55,7 @@ public class WorkTaskRepository : IWorkTaskRepository
         return taskList;
     }
 
-    public WorkTask? getTask(int IdUser,int Id)
+    public WorkTask? GetTask(int IdUser,int Id)
     {
         var task= _dbContext.WorkTasks.FirstOrDefault(r => r.Id_Task == Id && r.Id_Customer == IdUser);
         return task;
