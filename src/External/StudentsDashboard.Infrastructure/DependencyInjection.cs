@@ -20,6 +20,10 @@ public static class DependencyInjection
 
         services.AddScoped<IWorkTaskRepository, WorkTaskRepository>();
 
+
+        services.AddHttpContextAccessor();
+        services.AddScoped<IUserContextGetIdService, UserContextGetIdService>();
+
         return services;
     }
 }

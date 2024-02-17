@@ -11,23 +11,33 @@ namespace StudentsDashboard.Application.WorkTasks.Commands.AddWorkTask
     public class AddWorkTaskHandler : IRequestHandler<AddWorkTaskCommand, ErrorOr<WorkTaskResponse>>
     {
         private readonly IWorkTaskRepository _workTaskRepository;
+        private readonly IUserContextGetIdService _userContextGetId;
 
-        public AddWorkTaskHandler(IWorkTaskRepository workTaskRepository)
+        public AddWorkTaskHandler(IWorkTaskRepository workTaskRepository, IUserContextGetIdService userContextGetId)
         {
             _workTaskRepository = workTaskRepository;
+            _userContextGetId = userContextGetId;
         }
 
         public async Task<ErrorOr<WorkTaskResponse>> Handle(AddWorkTaskCommand request, CancellationToken cancellationToken)
         {
+            var userId = _userContextGetId.GetUserId;
+
+            if (userId is null)
+            {
+                return Errors.WorkTask.UserDoesNotLogged;
+            }
+
 
             var workTask = new WorkTask
             {
+                Id_User = (int)userId,
                 Name = request.Name,
-                Desciption = request.Desciption,
+                Description = request.Description,
                 Date = request.Date
             };
 
-            _workTaskRepository.CreateTask(workTask);
+            await _workTaskRepository.CreateTask(workTask);
 
             return new WorkTaskResponse("Task added");
         }

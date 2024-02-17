@@ -14,7 +14,7 @@ namespace StudentsDashboard.Application.WorkTasks.Commands.EditWorkTask
             {
                 if (x.Date == null && string.IsNullOrEmpty(x.Desciption) && string.IsNullOrEmpty(x.Name))
                 {
-                    context.AddFailure("jedno strzech musi byc wypelnione");
+                    context.AddFailure("one of the three must be completed writen");
                 }
             });
 

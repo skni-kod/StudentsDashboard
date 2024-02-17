@@ -11,19 +11,27 @@ namespace StudentsDashboard.Application.WorkTasks.Commands.DeleteWorkTask
     public class DeleteWorkTaskHandler
     {
         private readonly IWorkTaskRepository _workTaskRepository;
+        private readonly IUserContextGetIdService _userContextGetId;
 
-        public DeleteWorkTaskHandler(IWorkTaskRepository workTaskRepository)
+        public DeleteWorkTaskHandler(IWorkTaskRepository workTaskRepository,IUserContextGetIdService userContextGetId)
         {
             _workTaskRepository = workTaskRepository;
+            _userContextGetId = userContextGetId;
         }
 
 
         public async Task<ErrorOr<WorkTaskResponse>> Handle(EditWorkTaskCommand request, CancellationToken cancellationToken)
         {
+            var userId = _userContextGetId.GetUserId;
+
+            if (userId is null)
+            {
+                return Errors.WorkTask.UserDoesNotLogged;
+            }
 
             int Id = request.Id;
 
-            _workTaskRepository.DeleteTask(Id);
+            await _workTaskRepository.DeleteTask(Id);
 
             return new WorkTaskResponse("Task delete");
         }

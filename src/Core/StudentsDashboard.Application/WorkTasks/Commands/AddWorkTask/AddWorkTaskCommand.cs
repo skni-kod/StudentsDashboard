@@ -7,6 +7,6 @@ namespace StudentsDashboard.Application.WorkTasks.Commands.AddWorkTask
     public record AddWorkTaskCommand
     (
         string Name ,
-        string Desciption,
+        string Description,
         DateTime Date): IRequest<ErrorOr<WorkTaskResponse>>;
 }

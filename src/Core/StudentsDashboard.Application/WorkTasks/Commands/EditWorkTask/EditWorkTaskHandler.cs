@@ -11,23 +11,31 @@ namespace StudentsDashboard.Application.WorkTasks.Commands.EditWorkTask
     public class EditWorkTaskHandler : IRequestHandler<EditWorkTaskCommand, ErrorOr<WorkTaskResponse>>
     {
         private readonly IWorkTaskRepository _workTaskRepository;
+        private readonly IUserContextGetIdService _userContextGetId;
 
-        public EditWorkTaskHandler(IWorkTaskRepository workTaskRepository)
+        public EditWorkTaskHandler(IWorkTaskRepository workTaskRepository, IUserContextGetIdService userContextGetId)
         {
             _workTaskRepository = workTaskRepository;
+            _userContextGetId = userContextGetId;
         }
 
         public async Task<ErrorOr<WorkTaskResponse>> Handle(EditWorkTaskCommand request, CancellationToken cancellationToken)
         {
+            var userId = _userContextGetId.GetUserId;
+
+            if (userId is null)
+            {
+                return Errors.WorkTask.UserDoesNotLogged;
+            }
 
             var workTask = new WorkTask
             {
                 Name = request.Name,
-                Desciption = request.Desciption,
+                Description = request.Desciption,
                 Date = request.Date
             };
 
-            _workTaskRepository.EditTask(request.Id,workTask);
+            await _workTaskRepository.EditTask(request.Id,workTask);
 
             return new WorkTaskResponse("Task edited");
         }

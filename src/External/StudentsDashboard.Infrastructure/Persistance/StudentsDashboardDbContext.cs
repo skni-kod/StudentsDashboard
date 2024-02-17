@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentsDashboard.Domain.Entities;
-using StudentsDashboard.Infrastructure.Persistance.Repositories;
 
 namespace StudentsDashboard.Infrastructure.Persistance;
 
