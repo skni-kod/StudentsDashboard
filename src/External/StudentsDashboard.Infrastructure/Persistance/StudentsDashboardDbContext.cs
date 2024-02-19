@@ -11,8 +11,7 @@ public class StudentsDashboardDbContext : DbContext
     }
 
     public DbSet<WorkTask> WorkTasks { get; set; }
-
     
-
+    public DbSet<WorkEvent> WorkEvents { get; set; }
 
 }
