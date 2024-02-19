@@ -11,7 +11,7 @@ namespace StudentsDashboard.Infrastructure;
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,
-        IConfiguration configuration)
+        ConfigurationManager configuration)
     {
         services.AddDbContext<StudentsDashboardDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("Default"),
@@ -19,13 +19,11 @@ public static class DependencyInjection
                     r.MigrationsAssembly(typeof(AssemblyReference).Assembly.ToString())));
 
         services.AddScoped<IWorkTaskRepository, WorkTaskRepository>();
-        services.AddScoped<IWorkEventRepository, WorkEventRepository>();
-        services.AddScoped<IDateService, DateService>();
 
 
         services.AddHttpContextAccessor();
         services.AddScoped<IUserContextGetIdService, UserContextGetIdService>();
-        
+
         return services;
     }
 }

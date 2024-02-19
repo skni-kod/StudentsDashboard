@@ -2,7 +2,7 @@
 
 namespace StudentsDashboard.Application.Common.Errors;
 
-public static partial class Errors
+public static class Errors
 {
 
 
