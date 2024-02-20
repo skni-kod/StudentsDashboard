@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using FluentValidation.TestHelper;
+using MediatR;
 using Moq;
 using StudentsDashboard.Application.Authentication.Commands.Register;
 using StudentsDashboard.Application.Persistance;
@@ -16,7 +17,7 @@ public class RegisterCommandHandlerTests
     public RegisterCommandHandlerTests()
     {
         _mockUserRepository = new Mock<IUserRepository>();
-        _handler = new RegisterCommandHandler(_mockUserRepository.Object);
+        _handler = new RegisterCommandHandler(_mockUserRepository.Object, default);
     }
     
     [Fact]

@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using MediatR;
+using StudentsDashboard.Application.Authentication.Events;
 using StudentsDashboard.Application.Common.Errors;
 using StudentsDashboard.Application.Contracts.Authentication;
 using StudentsDashboard.Application.Persistance;
@@ -10,10 +11,12 @@ namespace StudentsDashboard.Application.Authentication.Commands.Register;
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<RegisterResponse>>
 {
     private readonly IUserRepository _userRepository;
+    private readonly IMediator _mediator;
 
-    public RegisterCommandHandler(IUserRepository userRepository)
+    public RegisterCommandHandler(IUserRepository userRepository, IMediator mediator)
     {
         _userRepository = userRepository;
+        _mediator = mediator;
     }
 
     public async Task<ErrorOr<RegisterResponse>> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -33,6 +36,8 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<R
         };
         
         var id = _userRepository.Add(user);
+
+        _mediator.Publish(new UserRegisteredEvent(user));
 
         return new RegisterResponse(id);
     }

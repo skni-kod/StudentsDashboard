@@ -2,11 +2,13 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StudentsDashboard.Application.Common.Interfaces.Authentication;
+using StudentsDashboard.Application.Common.Models;
 using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Infrastructure.Authentication;
 using StudentsDashboard.Infrastructure.Persistance;
 using StudentsDashboard.Infrastructure.Persistance.Repositories;
 using StudentsDashboard.Infrastructure.Persistance.Seeders;
+using StudentsDashboard.Infrastructure.Services;
 
 namespace StudentsDashboard.Infrastructure;
 
@@ -32,6 +34,9 @@ public static class DependencyInjection
         services.AddHttpContextAccessor();
 
         services.AddScoped<IUserContextGetIdService, UserContextGetIdService>();
+
+        services.Configure<EmailSettings>(configuration.GetSection(EmailSettings.SectionName));
+        services.AddSingleton<IEmailSender, EmailSender>();
         
         return services;
     }
