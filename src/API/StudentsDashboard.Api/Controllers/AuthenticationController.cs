@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System.Security.Cryptography;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StudentsDashboard.Application.Authentication.Commands.Register;
 using StudentsDashboard.Application.Contracts.Authentication;

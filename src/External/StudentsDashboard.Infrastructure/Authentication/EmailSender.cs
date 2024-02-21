@@ -21,7 +21,7 @@ public class EmailSender : IEmailSender
         _emailSettings = emailSettings.Value;
     }
         
-    public bool Send(EmailMessage request)
+    public void Send(EmailMessage request)
     {
         var email = new MimeMessage();
         email.From.Add(MailboxAddress.Parse(_emailSettings.Host));
@@ -29,7 +29,7 @@ public class EmailSender : IEmailSender
         email.Subject = request.Subject;
         email.Body = new TextPart(TextFormat.Html)
         {
-            Text = "Wiadomość testowa"
+            Text = request.Body
         };
 
         using var smtp = new SmtpClient();
@@ -37,7 +37,5 @@ public class EmailSender : IEmailSender
         smtp.Authenticate(_emailSettings.Host, _emailSettings.Password);
         smtp.Send(email);
         smtp.Disconnect(true);
-
-        return true;
     }
 }

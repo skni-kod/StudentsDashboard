@@ -4,5 +4,5 @@ namespace StudentsDashboard.Application.Common.Interfaces.Authentication;
 
 public interface IEmailSender
 {
-    bool Send(EmailMessage email);
+    void Send(EmailMessage email);
 }

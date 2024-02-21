@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System.Text;
+using MediatR;
 using StudentsDashboard.Application.Common.Interfaces.Authentication;
 using StudentsDashboard.Application.Common.Models;
 
@@ -19,11 +20,19 @@ public class SendEmailCommandHandler : IRequestHandler<SendEmailCommand, Unit>
         {
             To = request.RegisteredUser.Email,
             Subject = "Verify Email",
-            Body = "Please confirm your email"
+            Body = CreateVerifyEmailMessage(request.RegisteredUser.VerificationToken),
         };
         
-        var response = _emailSender.Send(email);
+        _emailSender.Send(email);
         
         return Task.FromResult(Unit.Value);
+    }
+
+    private string CreateVerifyEmailMessage(string verificationToken)
+    {
+        var message = new StringBuilder();
+        message.Append("<h1>Please verify your email</h1>");
+        message.Append($"<h2>Your code: {verificationToken}");
+        return message.ToString();
     }
 }
