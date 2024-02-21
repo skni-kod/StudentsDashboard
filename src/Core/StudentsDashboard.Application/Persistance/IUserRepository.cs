@@ -7,4 +7,5 @@ public interface IUserRepository
     User? GetUserByEmail(string email);
     bool Any(string email);
     int Add(User user);
+    void VerifyEmail(User user);
 }

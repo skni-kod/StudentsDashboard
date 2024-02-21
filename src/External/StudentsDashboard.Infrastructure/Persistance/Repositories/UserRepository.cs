@@ -33,4 +33,11 @@ public class UserRepository : IUserRepository
 
         return user.Id;
     }
+
+    public void VerifyEmail(User user)
+    {
+        user.VerificationToken = null;
+        user.VerifiedAt = DateTime.UtcNow;
+        _dbContext.SaveChanges();
+    }
 }
