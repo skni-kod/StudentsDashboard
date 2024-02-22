@@ -2,7 +2,7 @@ namespace StudentsDashboard.Domain.Entities;
 
 public class WorkEvent
 {
-    public int Id_Event { get; set; }
+    public int Id { get; set; }
     public int Id_Customer { get; set; }
     public double? Location { get; set; }
     public string Title { get; set; }

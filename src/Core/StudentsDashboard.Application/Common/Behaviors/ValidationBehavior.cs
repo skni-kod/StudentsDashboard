@@ -39,7 +39,5 @@ public class ValidationBehavior<TRequest, TResponse> :
                 description: validationFailure.ErrorMessage));
 
         return (dynamic)errors;
-        
-        throw new NotImplementedException();
     }
 }

@@ -20,7 +20,7 @@ public class WorkTaskRepository : IWorkTaskRepository
 
     public void deleteTask(int Id)
     {
-        var result = _dbContext.WorkTasks.SingleOrDefault(c => c.Id_Task == Id);
+        var result = _dbContext.WorkTasks.SingleOrDefault(c => c.Id == Id);
 
 
         _dbContext.WorkTasks.Remove(result);
@@ -29,7 +29,7 @@ public class WorkTaskRepository : IWorkTaskRepository
 
     public void editTask(int Id, WorkTask editedTask)
     {
-        var result = _dbContext.WorkTasks.FirstOrDefault(c => c.Id_Task == Id);
+        var result = _dbContext.WorkTasks.FirstOrDefault(c => c.Id == Id);
 
         if (result.Name != editedTask.Name)
         {
@@ -57,7 +57,7 @@ public class WorkTaskRepository : IWorkTaskRepository
 
     public WorkTask? getTask(int IdUser,int Id)
     {
-        var task= _dbContext.WorkTasks.FirstOrDefault(r => r.Id_Task == Id && r.Id_Customer == IdUser);
+        var task= _dbContext.WorkTasks.FirstOrDefault(r => r.Id == Id && r.Id_Customer == IdUser);
         return task;
     }
     
