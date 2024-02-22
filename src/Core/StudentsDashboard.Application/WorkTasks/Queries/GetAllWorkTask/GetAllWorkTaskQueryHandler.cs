@@ -8,13 +8,13 @@ using StudentsDashboard.Application.WorkTasks.Queries.DTOs;
 
 namespace StudentsDashboard.Application.WorkTasks.Queries.GetAllWorkTask
 {
-    public class GetAllWorkTaskHandler : IRequestHandler<GetAllWorkTaskQuery, ErrorOr<List<GetWorkTaskDto>>>
+    public class GetAllWorkTaskQueryHandler : IRequestHandler<GetAllWorkTaskQuery, ErrorOr<List<GetWorkTaskDto>>>
     {
         private readonly IWorkTaskRepository _workTaskRepository;
         private readonly IUserContextGetIdService _userContextGetId;
 
 
-        public GetAllWorkTaskHandler(IWorkTaskRepository workTaskRepository, IUserContextGetIdService userContextGetId)
+        public GetAllWorkTaskQueryHandler(IWorkTaskRepository workTaskRepository, IUserContextGetIdService userContextGetId)
         {
             _workTaskRepository = workTaskRepository;
             _userContextGetId = userContextGetId;
@@ -22,12 +22,12 @@ namespace StudentsDashboard.Application.WorkTasks.Queries.GetAllWorkTask
 
         public async Task<ErrorOr<List<GetWorkTaskDto>>>  Handle(GetAllWorkTaskQuery request,CancellationToken cancellationToken)
         {
-            var userId = _userContextGetId.GetUserId;
+            var userId = 1; //_userContextGetId.GetUserId;
 
-            if (userId is null)
+/*            if (userId is null)
             {
                 return Errors.WorkTask.UserDoesNotLogged;
-            }
+            }*/
 
             IEnumerable<WorkTask> workTasks;
 

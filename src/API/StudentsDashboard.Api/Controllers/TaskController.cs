@@ -59,11 +59,17 @@ namespace StudentsDashboard.Api.Controllers
                     errors => Problem(errors));
         }
 
+
+        /// <summary>
+        /// Display one specific event
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpDelete("DeleteWorkTask")]
-        public async Task<IActionResult> DeleteWorkTask([FromBody] int Id)
+        public async Task<IActionResult> DeleteWorkTask([FromQuery] int id)
         {
             var command = new DeleteWorkTaskCommand(
-                Id
+                id
                 );
 
             var response = await _mediator.Send(command);

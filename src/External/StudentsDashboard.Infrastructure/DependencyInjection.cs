@@ -26,7 +26,8 @@ public static class DependencyInjection
         services.AddScoped<Seeder>();
 
         services.AddScoped<IWorkTaskRepository, WorkTaskRepository>();
-
+        services.AddScoped<IWorkEventRepository, WorkEventRepository>();
+        services.AddScoped<IDateService, DateService>();
 
         services.AddHttpContextAccessor();
         services.AddScoped<IUserContextGetIdService, UserContextGetIdService>();

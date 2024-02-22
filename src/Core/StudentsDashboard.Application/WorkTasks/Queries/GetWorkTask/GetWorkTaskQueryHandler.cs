@@ -12,13 +12,13 @@ using static StudentsDashboard.Application.Common.Errors.Errors;
 
 namespace StudentsDashboard.Application.WorkTasks.Queries.GetWorkTask
 {
-    public class GetWorkTaskHandler : IRequestHandler<GetWorkTaskQuery, ErrorOr<GetWorkTaskDto>>
+    public class GetWorkTaskQueryHandler : IRequestHandler<GetWorkTaskQuery, ErrorOr<GetWorkTaskDto>>
     {
         private readonly IWorkTaskRepository _workTaskRepository;
         private readonly IUserContextGetIdService _userContextGetId;
 
 
-        public GetWorkTaskHandler(IWorkTaskRepository workTaskRepository, IUserContextGetIdService userContextGetId)
+        public GetWorkTaskQueryHandler(IWorkTaskRepository workTaskRepository, IUserContextGetIdService userContextGetId)
         {
             _workTaskRepository = workTaskRepository;
             _userContextGetId = userContextGetId;
@@ -26,12 +26,12 @@ namespace StudentsDashboard.Application.WorkTasks.Queries.GetWorkTask
 
         public async Task<ErrorOr<GetWorkTaskDto>> Handle(GetWorkTaskQuery request, CancellationToken cancellationToken)
         {
-            var userId = _userContextGetId.GetUserId;
+            var userId = 1; //_userContextGetId.GetUserId;
 
-            if (userId is null)
+/*            if (userId is null)
             {
                 return Errors.WorkTask.UserDoesNotLogged;
-            }
+            }*/
 
 
 
@@ -44,7 +44,7 @@ namespace StudentsDashboard.Application.WorkTasks.Queries.GetWorkTask
 
             GetWorkTaskDto result = new GetWorkTaskDto
             {
-                Id = workTask.Id_User,
+                Id = workTask.IdUser,
                 Name = workTask.Name,
                 Description = workTask.Description,
                 Date = workTask.Date

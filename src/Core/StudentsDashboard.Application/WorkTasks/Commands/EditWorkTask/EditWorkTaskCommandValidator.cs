@@ -2,9 +2,9 @@
 
 namespace StudentsDashboard.Application.WorkTasks.Commands.EditWorkTask
 {
-    public class EditWorkTaskValidator : AbstractValidator<EditWorkTaskCommand>
+    public class EditWorkTaskCommandValidator : AbstractValidator<EditWorkTaskCommand>
     {
-        public EditWorkTaskValidator() {
+        public EditWorkTaskCommandValidator() {
 
             RuleFor(x => x.Id)
             .NotEmpty().WithMessage("Id is required");

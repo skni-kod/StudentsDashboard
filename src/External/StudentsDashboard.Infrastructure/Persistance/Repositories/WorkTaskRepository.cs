@@ -52,14 +52,14 @@ public class WorkTaskRepository : IWorkTaskRepository
     public async Task<IEnumerable<WorkTask>> GetAllTask(int Id_USer)
     {
         var taskList = await _dbContext.WorkTasks.
-            Where(l => l.Id_User == Id_USer).ToListAsync();
+            Where(l => l.IdUser == Id_USer).ToListAsync();
 
         return taskList;
     }
 
     public async Task<WorkTask?> GetTask(int Id_User,int Id_Task)
     {
-        var task = await _dbContext.WorkTasks.FirstOrDefaultAsync(r => r.Id == Id_Task && r.Id_User == Id_User);
+        var task = await _dbContext.WorkTasks.FirstOrDefaultAsync(r => r.Id == Id_Task && r.IdUser == Id_User);
         return task;
     }
 }
