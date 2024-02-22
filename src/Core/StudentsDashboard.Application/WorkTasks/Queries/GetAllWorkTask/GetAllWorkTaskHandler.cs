@@ -38,7 +38,7 @@ namespace StudentsDashboard.Application.WorkTasks.Queries.GetAllWorkTask
 
             List<GetWorkTaskDto> workTaskList = workTasks.Select(x => new GetWorkTaskDto
             {
-                Id=x.Id_Task,
+                Id=x.Id,
                 Name=x.Name,
                 Description=x.Description,
                 Date=x.Date,

@@ -57,9 +57,9 @@ public class WorkTaskRepository : IWorkTaskRepository
         return taskList;
     }
 
-    public async Task<WorkTask?> GetTask(int Id_User,int Id)
+    public async Task<WorkTask?> GetTask(int Id_User,int Id_Task)
     {
-        var task = await _dbContext.WorkTasks.FirstOrDefaultAsync(r => r.Id_Task == Id && r.Id_User == Id_User);
+        var task = await _dbContext.WorkTasks.FirstOrDefaultAsync(r => r.Id == Id_Task && r.Id_User == Id_User);
         return task;
     }
 }
