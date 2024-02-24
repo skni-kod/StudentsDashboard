@@ -1,7 +1,9 @@
 ﻿using System.Text;
 using MediatR;
+using StudentsDashboard.Application.Common.Errors;
 using StudentsDashboard.Application.Common.Interfaces.Authentication;
 using StudentsDashboard.Application.Common.Models;
+using StudentsDashboard.Application.Persistance;
 
 namespace StudentsDashboard.Application.Authentication.Commands.SendEmail;
 

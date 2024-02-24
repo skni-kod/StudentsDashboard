@@ -31,4 +31,11 @@
       <ProjectReference Include="..\..\..\src\Core\StudentsDashboard.Application\StudentsDashboard.Application.csproj" />
     </ItemGroup>
 
+
+
+
+    <ItemGroup>
+      <Folder Include="Authentication\Commands\VerifyEmail\" />
+    </ItemGroup>
+
 </Project>
