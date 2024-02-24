@@ -34,8 +34,5 @@
 
 
 
-    <ItemGroup>
-      <Folder Include="Authentication\Commands\VerifyEmail\" />
-    </ItemGroup>
 
 </Project>
