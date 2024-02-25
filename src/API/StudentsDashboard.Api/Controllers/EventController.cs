@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using StudentsDashboard.Application.Contracts.WorkEventAnswer;
@@ -11,6 +12,7 @@ using StudentsDashboard.Application.WorkEvents.Queries.GetSpecificEvent;
 namespace StudentsDashboard.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/events")]
 public class EventController : ApiController
 {
