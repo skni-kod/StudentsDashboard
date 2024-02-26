@@ -35,7 +35,13 @@ public static class DependencyInjection
         services.AddHttpContextAccessor();
 
         services.AddScoped<IUserContextGetIdService, UserContextGetIdService>();
+        
+        
+        return services;
+    }
 
+    public static IServiceCollection AddAuthorization(this IServiceCollection services, IConfiguration configuration)
+    {
         var authenticationSettings = new JwtSettings();
         configuration.GetSection(JwtSettings.SectionName).Bind(authenticationSettings);
         services.AddSingleton(authenticationSettings);
@@ -56,8 +62,7 @@ public static class DependencyInjection
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.Secret))
             };
         });
-        
-        
+
         return services;
     }
 }
