@@ -21,6 +21,8 @@ public class LoginHandler : IRequestHandler<LoginCommand, ErrorOr<LoginResponse>
     public async Task<ErrorOr<LoginResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetUser(request.Email, request.Password);
+        
+        //In the future we need to implement account verification confirmation here
 
         if (user is null) return Errors.User.BadData;
 

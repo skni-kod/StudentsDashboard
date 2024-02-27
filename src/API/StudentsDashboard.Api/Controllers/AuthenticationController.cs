@@ -41,8 +41,6 @@ public class AuthenticationController : ApiController
     public async Task<IActionResult> Login([FromBody] LoginCommand command)
     {
         var response = await _mediator.Send(command);
-
-        
     
         return response.Match(
             loginResponse => Ok(loginResponse),
