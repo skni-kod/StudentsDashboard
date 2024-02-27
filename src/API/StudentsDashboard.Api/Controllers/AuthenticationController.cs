@@ -42,6 +42,8 @@ public class AuthenticationController : ApiController
     {
         var response = await _mediator.Send(command);
 
+        
+    
         return response.Match(
             loginResponse => Ok(loginResponse),
             errors => Problem(errors));

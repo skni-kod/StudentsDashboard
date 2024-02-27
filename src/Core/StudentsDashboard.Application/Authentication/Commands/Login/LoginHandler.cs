@@ -24,8 +24,8 @@ public class LoginHandler : IRequestHandler<LoginCommand, ErrorOr<LoginResponse>
 
         if (user is null) return Errors.User.BadData;
 
-        var token = _jwtTokenGenerator.GenerateToken(user.Id, user.FirstName, user.LastName);
-
-        return new LoginResponse(token);
+         _jwtTokenGenerator.GenerateToken(user.Id, user.FirstName, user.LastName);
+         
+        return new LoginResponse("Successfull!");
     }
 }
