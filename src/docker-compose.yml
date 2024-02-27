@@ -47,4 +47,4 @@ services:
 
 volumes: 
   pgdata:
-    external: false
+    external: true

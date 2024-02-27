@@ -54,7 +54,7 @@ public class EventController : ApiController
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> EditWorkEvent([FromBody] WorkEventRequest request, [FromRoute] int id)
+    public async Task<IActionResult> EditWorkEvent([FromBody] WorkEventEditRequest request, [FromRoute] int id)
     {
         var command = new EditWorkEventCommand(
             id,
@@ -111,7 +111,7 @@ public class EventController : ApiController
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    [HttpGet("{id}")]
+    [HttpGet("{Id}")]
     public async Task<IActionResult> GetEvent([FromRoute]GetEventQuery query)
     {
         var response = await _mediator.Send(query);
