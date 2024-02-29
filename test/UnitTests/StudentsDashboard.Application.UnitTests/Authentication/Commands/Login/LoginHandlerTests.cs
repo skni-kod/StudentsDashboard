@@ -6,7 +6,7 @@ using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Application.UnitTests.Authentication.Commands.TestUtils;
 using StudentsDashboard.Domain.Entities;
 
-namespace StudentsDashboard.Application.UnitTests.Authentication.Commands.Register;
+namespace StudentsDashboard.Application.UnitTests.Authentication.Commands.Login;
 
 public class LoginHandlerTests
 {
