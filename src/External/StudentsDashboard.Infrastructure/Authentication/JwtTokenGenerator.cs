@@ -47,26 +47,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             HttpOnly = true,
             Expires = DateTimeOffset.Now.AddMinutes(_jwtSettings.ExpiryMinutes)
         };
+        
         _httpContextAccessor.HttpContext.Response.Cookies.Append("Token", tokenHandler, cookieOptions);
-
-        /*var claims = new[]
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new Claim(JwtRegisteredClaimNames.GivenName, firstName),
-            new Claim(JwtRegisteredClaimNames.FamilyName, lastName)
-        };
-
-        var signingCredentials = new SigningCredentials(
-            new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
-            SecurityAlgorithms.HmacSha256);
-
-        var securityToken = new JwtSecurityToken(
-            issuer: _jwtSettings.Issuer,
-            expires: DateTime.Now.AddMinutes(_jwtSettings.ExpiryMinutes),
-            claims: claims,
-            signingCredentials: signingCredentials);
-
-        return new JwtSecurityTokenHandler().WriteToken(securityToken); */
     }
 }
