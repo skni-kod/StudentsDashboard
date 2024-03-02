@@ -6,13 +6,13 @@ using StudentsDashboard.Application.WorkEvents.Commands.DeleteWorkEvent;
 
 namespace StudentsDashboard.Application.UnitTests.WorkEvent.Commands.DeleteWorkEvent;
 
-public class DeleteWorkEventComandHandlerTest
+public class DeleteWorkEventHandlerTest
 {
     private readonly DeleteWorkEventHandler _handler;
     private readonly Mock<IWorkEventRepository> _mockWorkEvent;
     private readonly Mock<IUserContextGetIdService> _mockGetUserId;
 
-    public DeleteWorkEventComandHandlerTest()
+    public DeleteWorkEventHandlerTest()
     {
         _mockGetUserId = new Mock<IUserContextGetIdService>();
         _mockWorkEvent = new Mock<IWorkEventRepository>();
