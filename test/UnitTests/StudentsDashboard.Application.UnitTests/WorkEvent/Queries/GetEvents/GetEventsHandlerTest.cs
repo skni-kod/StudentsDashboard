@@ -1,6 +1,7 @@
 ﻿using Moq;
 using StudentsDashboard.Application.Common.Errors;
 using StudentsDashboard.Application.Persistance;
+using StudentsDashboard.Application.UnitTests.WorkEvent.DataToTests;
 using StudentsDashboard.Application.WorkEvents.Queries.GetManyEvents;
 
 namespace StudentsDashboard.Application.UnitTests.WorkEvent.Queries.GetEvents;
@@ -61,20 +62,7 @@ public class GetEventsHandlerTest
         //Arrange
         var query = new GetEventsQuery(null);
         var userId = 1;
-        var workEvent = new List<Domain.Entities.WorkEvent>
-        {
-            new Domain.Entities.WorkEvent
-            {
-                Id = 1, 
-                Id_Customer = 1, 
-                Location = 12.34, 
-                Title = "Test",
-                From_Date = DateOnly.Parse("2022-12-12"), 
-                From_Time = TimeOnly.Parse("19:00:00"),
-                To_Date = DateOnly.Parse("2022-12-13"), 
-                To_Time = TimeOnly.Parse("12:00:00")
-            }
-        };
+        var workEvent = DataToTestsQueries.DummyDataToAllEvents;
 
         _mockUserId.Setup(x => x.GetUserId)
             .Returns(userId);
