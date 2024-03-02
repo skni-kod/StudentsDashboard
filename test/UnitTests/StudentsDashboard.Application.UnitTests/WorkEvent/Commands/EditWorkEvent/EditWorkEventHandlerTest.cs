@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
+using StudentsDashboard.Application.Common.Errors;
 using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Application.UnitTests.WorkEvent.TestUtils;
 using StudentsDashboard.Application.WorkEvents.Commands.EditWorkEvent;
@@ -32,7 +33,9 @@ public class EditWorkEventHandlerTest
         var result = await _handlerTest.Handle(editCommand, default);
 
         //Assert
-        result.IsError.Should().BeTrue();
+        Assert.True(result.IsError);
+        Assert.Single(result.Errors);
+        Assert.Equal(Errors.WorkEvent.UserDoesNotLogged, result.Errors.Single());
     }
 
     [Fact]
@@ -51,7 +54,9 @@ public class EditWorkEventHandlerTest
         var result = await _handlerTest.Handle(editCommand, default);
 
         //Assert
-        result.IsError.Should().BeTrue();
+        Assert.True(result.IsError);
+        Assert.Single(result.Errors);
+        Assert.Equal(Errors.WorkEvent.OwnerError, result.Errors.Single());
     }
 
     [Fact]
@@ -70,6 +75,6 @@ public class EditWorkEventHandlerTest
         var result = await _handlerTest.Handle(editCommand, default);
 
         //Assert
-        result.IsError.Should().BeFalse(); 
+        Assert.False(result.IsError);
     }
 }

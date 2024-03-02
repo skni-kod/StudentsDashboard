@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
+using StudentsDashboard.Application.Common.Errors;
 using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Application.UnitTests.WorkEvent.TestUtils;
 using StudentsDashboard.Application.WorkEvents.Commands.DeleteWorkEvent;
@@ -32,7 +33,9 @@ public class DeleteWorkEventHandlerTest
         var result = await _handler.Handle(deteleCommand, default);
 
         //Assert
-        result.IsError.Should().BeTrue();
+        Assert.True(result.IsError);
+        Assert.Single(result.Errors);
+        Assert.Equal(Errors.WorkEvent.UserDoesNotLogged, result.Errors.Single());
     }
 
     [Fact]
@@ -51,7 +54,9 @@ public class DeleteWorkEventHandlerTest
         var result = await _handler.Handle(deleteHandler, default);
 
         //Assert
-        result.IsError.Should().BeTrue();
+        Assert.True(result.IsError);
+        Assert.Single(result.Errors);
+        Assert.Equal(Errors.WorkEvent.OwnerError, result.Errors.Single());
     }
 
     [Fact]
@@ -69,6 +74,6 @@ public class DeleteWorkEventHandlerTest
         var result = await _handler.Handle(deleteHandler, default);
 
         //Assert
-        result.IsError.Should().BeFalse();
+        Assert.False(result.IsError);
     }
 }

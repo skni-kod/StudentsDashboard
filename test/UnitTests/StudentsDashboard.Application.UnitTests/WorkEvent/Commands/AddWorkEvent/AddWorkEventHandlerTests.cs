@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Moq;
+using StudentsDashboard.Application.Common.Errors;
 using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Application.UnitTests.WorkEvent.TestUtils;
 using StudentsDashboard.Application.WorkEvents.Commands.AddWorkEvent;
@@ -32,7 +33,9 @@ public class AddWorkEventHandlerTests
         var result = await _handler.Handle(eventHandler, default);
 
         //Assert
-        result.IsError.Should().BeTrue();
+        Assert.True(result.IsError);
+        Assert.Single(result.Errors);
+        Assert.Equal(Errors.WorkEvent.UserDoesNotLogged, result.Errors.Single());
     }
 
     [Fact]
@@ -48,6 +51,6 @@ public class AddWorkEventHandlerTests
         var result = await _handler.Handle(eventHandler, default);
 
         //Assert
-        result.IsError.Should().BeFalse();
+        Assert.False(result.IsError);
     }
 }

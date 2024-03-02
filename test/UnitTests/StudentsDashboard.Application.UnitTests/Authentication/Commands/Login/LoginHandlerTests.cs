@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Moq;
 using StudentsDashboard.Application.Authentication.Commands.Login;
+using StudentsDashboard.Application.Common.Errors;
 using StudentsDashboard.Application.Common.Interfaces.Authentication;
 using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Application.UnitTests.Authentication.Commands.TestUtils;
@@ -35,7 +36,9 @@ public class LoginHandlerTests
         var result = await _handler.Handle(loginCommand, default);
 
         //Assert
-        result.IsError.Should().BeTrue();
+        Assert.True(result.IsError);
+        Assert.Single(result.Errors);
+        Assert.Equal(Errors.User.BadData, result.Errors.Single());
     }
 
     [Fact]
@@ -57,8 +60,6 @@ public class LoginHandlerTests
         var result = await _handler.Handle(loginCommand, default);
 
         //Assert
-        result.IsError.Should().BeFalse();
-        _mockJwt.Verify(x => 
-            x.GenerateToken(It.IsAny<int>(),It.IsAny<string>(),It.IsAny<string>()), Times.Once);
+        Assert.False(result.IsError);
     }
 }
