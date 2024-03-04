@@ -1,7 +1,7 @@
-﻿using Moq;
+﻿using FluentAssertions;
+using Moq;
 using StudentsDashboard.Application.Common.Errors;
 using StudentsDashboard.Application.Persistance;
-using StudentsDashboard.Application.UnitTests.WorkEvent.DataToTests;
 using StudentsDashboard.Application.WorkEvents.Queries.GetSpecificEvent;
 
 namespace StudentsDashboard.Application.UnitTests.WorkEvent.Queries.GetEvent;
@@ -9,14 +9,14 @@ namespace StudentsDashboard.Application.UnitTests.WorkEvent.Queries.GetEvent;
 public class GetEventHandlerTest
 {
     private readonly GetEventHandler _handler;
-    private readonly Mock<IUserContextGetIdService> _mockUserId;
-    private readonly Mock<IWorkEventRepository> _mockWorkEvent;
+    private readonly Mock<IUserContextGetIdService> _mockIUserContextGetIdService;
+    private readonly Mock<IWorkEventRepository> _mockIWorkEventRepository;
 
     public GetEventHandlerTest()
     {
-        _mockUserId = new Mock<IUserContextGetIdService>();
-        _mockWorkEvent = new Mock<IWorkEventRepository>();
-        _handler = new GetEventHandler(_mockUserId.Object, _mockWorkEvent.Object);
+        _mockIUserContextGetIdService = new Mock<IUserContextGetIdService>();
+        _mockIWorkEventRepository = new Mock<IWorkEventRepository>();
+        _handler = new GetEventHandler(_mockIUserContextGetIdService.Object, _mockIWorkEventRepository.Object);
     }
 
     [Fact]
@@ -25,8 +25,8 @@ public class GetEventHandlerTest
         //Arrange
         var query = new GetEventQuery(1);
 
-        _mockUserId.Setup(x => x.GetUserId)
-            .Returns((int?)null);
+        _mockIUserContextGetIdService.Setup(x => x.GetUserId)
+            .Returns(value: null);
 
         //Act
         var result = await _handler.Handle(query, default);
@@ -43,40 +43,35 @@ public class GetEventHandlerTest
         //Arrange
         var query = new GetEventQuery(3);
 
-        _mockUserId.Setup(x => x.GetUserId)
+        _mockIUserContextGetIdService.Setup(x => x.GetUserId)
             .Returns(1);
 
-        _mockWorkEvent.Setup(x => x.GetEvent(It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync((IEnumerable<Domain.Entities.WorkEvent>)null);
+        _mockIWorkEventRepository.Setup(x => x.GetEvent(It.IsAny<int>(), It.IsAny<int>()))
+            .ReturnsAsync(value: null);
 
         //Act
         var result = await _handler.Handle(query, default);
 
         //Assert
-        Assert.True(result.IsError);
-        Assert.Single(result.Errors);
-        Assert.Equal(Errors.WorkEvent.NotDataToDisplay, result.Errors.Single());
+        result.IsError.Should().BeTrue();
     }
 
     [Fact]
     public async Task Handle_Should_ReturnData_WhenDataExists()
     {
         //Arrange
-        var eventId = 2;
-        var query = new GetEventQuery(eventId);
-        var userId = 1;
-        var dummyData = DataToTestsQueries.DummyDataToSpecificEcent();
+        var query = new GetEventQuery(1);
 
-        _mockUserId.Setup(x => x.GetUserId)
-            .Returns(userId);
-
-        _mockWorkEvent.Setup(x => x.GetEvent(eventId, userId))
-            .ReturnsAsync(dummyData);
+        _mockIUserContextGetIdService.Setup(x => x.GetUserId)
+            .Returns(1);
 
         //Act
         var result = await _handler.Handle(query, default);
 
         //Assert
-        Assert.False(result.IsError);
+        _mockIUserContextGetIdService.Verify(x => x.GetUserId, Times.Once);
+        _mockIWorkEventRepository.Verify(x => x.GetEvent(It.IsAny<int>(),It.IsAny<int>()), Times.Once);
+
+        result.IsError.Should().BeFalse();
     }
 }

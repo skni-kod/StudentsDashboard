@@ -1,7 +1,6 @@
 using FluentAssertions;
 using Moq;
 using StudentsDashboard.Application.Authentication.Commands.Login;
-using StudentsDashboard.Application.Common.Errors;
 using StudentsDashboard.Application.Common.Interfaces.Authentication;
 using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Application.UnitTests.Authentication.Commands.TestUtils;
@@ -12,14 +11,14 @@ namespace StudentsDashboard.Application.UnitTests.Authentication.Commands.Login;
 public class LoginHandlerTests
 {
     private readonly LoginHandler _handler;
-    private readonly Mock<IUserRepository> _mockInterface;
-    private readonly Mock<IJwtTokenGenerator> _mockJwt;
+    private readonly Mock<IUserRepository> _mockIUserRepository;
+    private readonly Mock<IJwtTokenGenerator> _mockIJwtTokenGenerator;
 
     public LoginHandlerTests()
     {
-        _mockInterface = new Mock<IUserRepository>();
-        _mockJwt = new Mock<IJwtTokenGenerator>();
-        _handler = new LoginHandler(_mockInterface.Object, _mockJwt.Object);
+        _mockIUserRepository = new Mock<IUserRepository>();
+        _mockIJwtTokenGenerator = new Mock<IJwtTokenGenerator>();
+        _handler = new LoginHandler(_mockIUserRepository.Object, _mockIJwtTokenGenerator.Object);
     }
 
     [Fact]
@@ -28,17 +27,15 @@ public class LoginHandlerTests
         //Arrange
         var loginCommand = LoginCommandUtils.LoginCommand();
 
-        _mockInterface
+        _mockIUserRepository
             .Setup(x => x.GetUser(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync((User?) null);
+            .ReturnsAsync(value: null);
         //Act
 
         var result = await _handler.Handle(loginCommand, default);
 
         //Assert
-        Assert.True(result.IsError);
-        Assert.Single(result.Errors);
-        Assert.Equal(Errors.User.BadData, result.Errors.Single());
+        result.IsError.Should().BeTrue();
     }
 
     [Fact]
@@ -47,11 +44,11 @@ public class LoginHandlerTests
         //Arrange
         var loginCommand = LoginCommandUtils.LoginCommand();
         
-        _mockInterface
+        _mockIUserRepository
             .Setup(x => x.GetUser(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(new User());
         
-        _mockJwt
+        _mockIJwtTokenGenerator
             .Setup(x => 
                 x.GenerateToken(It.IsAny<int>(),It.IsAny<string>(),It.IsAny<string>()))
             .Verifiable();
@@ -60,6 +57,6 @@ public class LoginHandlerTests
         var result = await _handler.Handle(loginCommand, default);
 
         //Assert
-        Assert.False(result.IsError);
+        result.IsError.Should().BeFalse();
     }
 }

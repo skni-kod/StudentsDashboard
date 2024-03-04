@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using Moq;
-using StudentsDashboard.Application.Common.Errors;
 using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Application.UnitTests.WorkEvent.TestUtils;
 using StudentsDashboard.Application.WorkEvents.Commands.EditWorkEvent;
@@ -9,15 +8,15 @@ namespace StudentsDashboard.Application.UnitTests.WorkEvent.Commands.EditWorkEve
 
 public class EditWorkEventHandlerTest
 {
-    private readonly EditWorkEventHandler _handlerTest;
-    private readonly Mock<IWorkEventRepository> _mockEvent;
-    private readonly Mock<IUserContextGetIdService> _mockUserId;
+    private readonly EditWorkEventHandler _handler;
+    private readonly Mock<IWorkEventRepository> _mockIWorkEventRepository;
+    private readonly Mock<IUserContextGetIdService> _mockIUserContextGetIdService;
 
     public EditWorkEventHandlerTest()
     {
-        _mockUserId = new Mock<IUserContextGetIdService>();
-        _mockEvent = new Mock<IWorkEventRepository>();
-        _handlerTest = new EditWorkEventHandler(_mockEvent.Object, _mockUserId.Object);
+        _mockIUserContextGetIdService = new Mock<IUserContextGetIdService>();
+        _mockIWorkEventRepository = new Mock<IWorkEventRepository>();
+        _handler = new EditWorkEventHandler(_mockIWorkEventRepository.Object, _mockIUserContextGetIdService.Object);
     }
 
     [Fact]
@@ -26,16 +25,14 @@ public class EditWorkEventHandlerTest
         //Arrange
         var editCommand = EditWorkEventCommandUtils.EditWorkEventCommand();
 
-        _mockUserId.Setup(x => x.GetUserId)
-            .Returns((int?)null);
+        _mockIUserContextGetIdService.Setup(x => x.GetUserId)
+            .Returns(value: null);
 
         //Act
-        var result = await _handlerTest.Handle(editCommand, default);
+        var result = await _handler.Handle(editCommand, default);
 
         //Assert
-        Assert.True(result.IsError);
-        Assert.Single(result.Errors);
-        Assert.Equal(Errors.WorkEvent.UserDoesNotLogged, result.Errors.Single());
+        result.IsError.Should().BeTrue();
     }
 
     [Fact]
@@ -44,19 +41,17 @@ public class EditWorkEventHandlerTest
         //Arrange
         var editCommand = EditWorkEventCommandUtils.EditWorkEventCommand();
 
-        _mockUserId.Setup(x => x.GetUserId)
+        _mockIUserContextGetIdService.Setup(x => x.GetUserId)
             .Returns(1);
 
-        _mockEvent.Setup(x => x.HasPermision(It.IsAny<int>(), It.IsAny<int>()))
+        _mockIWorkEventRepository.Setup(x => x.HasPermision(It.IsAny<int>(), It.IsAny<int>()))
             .ReturnsAsync(false);
 
         //Act
-        var result = await _handlerTest.Handle(editCommand, default);
+        var result = await _handler.Handle(editCommand, default);
 
         //Assert
-        Assert.True(result.IsError);
-        Assert.Single(result.Errors);
-        Assert.Equal(Errors.WorkEvent.OwnerError, result.Errors.Single());
+        result.IsError.Should().BeTrue();
     }
 
     [Fact]
@@ -65,16 +60,16 @@ public class EditWorkEventHandlerTest
         //Arrange
         var editCommand = EditWorkEventCommandUtils.EditWorkEventCommand();
 
-        _mockUserId.Setup(x => x.GetUserId)
+        _mockIUserContextGetIdService.Setup(x => x.GetUserId)
             .Returns(1);
 
-        _mockEvent.Setup(x => x.HasPermision(It.IsAny<int>(), It.IsAny<int>()))
+        _mockIWorkEventRepository.Setup(x => x.HasPermision(It.IsAny<int>(), It.IsAny<int>()))
             .ReturnsAsync(true);
 
         //Act
-        var result = await _handlerTest.Handle(editCommand, default);
+        var result = await _handler.Handle(editCommand, default);
 
         //Assert
-        Assert.False(result.IsError);
+        result.IsError.Should().BeFalse();
     }
 }

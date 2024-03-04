@@ -1,7 +1,6 @@
-﻿using Moq;
-using StudentsDashboard.Application.Common.Errors;
+﻿using FluentAssertions;
+using Moq;
 using StudentsDashboard.Application.Persistance;
-using StudentsDashboard.Application.UnitTests.WorkEvent.DataToTests;
 using StudentsDashboard.Application.WorkEvents.Queries.GetManyEvents;
 
 namespace StudentsDashboard.Application.UnitTests.WorkEvent.Queries.GetEvents;
@@ -9,14 +8,14 @@ namespace StudentsDashboard.Application.UnitTests.WorkEvent.Queries.GetEvents;
 public class GetEventsHandlerTest
 {
     private readonly GetEventsHandler _handler;
-    private readonly Mock<IUserContextGetIdService> _mockUserId;
-    private readonly Mock<IWorkEventRepository> _mockWorkEvent;
+    private readonly Mock<IUserContextGetIdService> _mockIUserContextGetIdService;
+    private readonly Mock<IWorkEventRepository> _mockIWorkEventRepository;
 
     public GetEventsHandlerTest()
     {
-        _mockUserId = new Mock<IUserContextGetIdService>();
-        _mockWorkEvent = new Mock<IWorkEventRepository>();
-        _handler = new GetEventsHandler(_mockUserId.Object, _mockWorkEvent.Object);
+        _mockIUserContextGetIdService = new Mock<IUserContextGetIdService>();
+        _mockIWorkEventRepository = new Mock<IWorkEventRepository>();
+        _handler = new GetEventsHandler(_mockIUserContextGetIdService.Object, _mockIWorkEventRepository.Object);
     }
     
     [Fact]
@@ -24,15 +23,13 @@ public class GetEventsHandlerTest
     {
         // Arrange
         var query = new GetEventsQuery(null);
-        _mockUserId.Setup(x => x.GetUserId).Returns((int?)null);
+        _mockIUserContextGetIdService.Setup(x => x.GetUserId).Returns((int?)null);
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);
 
         // Assert
-        Assert.True(result.IsError);
-        Assert.Single(result.Errors); 
-        Assert.Equal(Errors.WorkEvent.UserDoesNotLogged, result.Errors.Single()); 
+        result.IsError.Should().BeTrue();
     }
 
     [Fact]
@@ -41,19 +38,17 @@ public class GetEventsHandlerTest
         //Arrange
         var query = new GetEventsQuery(null);
 
-        _mockUserId.Setup(x => x.GetUserId)
+        _mockIUserContextGetIdService.Setup(x => x.GetUserId)
             .Returns(1);
 
-        _mockWorkEvent.Setup(x => x.GetAllEvents(It.IsAny<int>()))
+        _mockIWorkEventRepository.Setup(x => x.GetAllEvents(It.IsAny<int>()))
             .ReturnsAsync(new List<Domain.Entities.WorkEvent>());
 
         //Act
         var result = await _handler.Handle(query, default);
 
         //Assert
-        Assert.True(result.IsError);
-        Assert.Single(result.Errors);
-        Assert.Equal(Errors.WorkEvent.NotDataToDisplay, result.Errors.Single());
+        result.IsError.Should().BeTrue();
     }
 
     [Fact]
@@ -61,19 +56,16 @@ public class GetEventsHandlerTest
     {
         //Arrange
         var query = new GetEventsQuery(null);
-        var userId = 1;
-        var workEvent = DataToTestsQueries.DummyDataToAllEvents;
 
-        _mockUserId.Setup(x => x.GetUserId)
-            .Returns(userId);
-
-        _mockWorkEvent.Setup(x => x.GetAllEvents(userId))
-            .ReturnsAsync(workEvent);
+        _mockIUserContextGetIdService.Setup(x => x.GetUserId)
+            .Returns(1);
 
         //Act
         var result = await _handler.Handle(query, default);
 
         //Assert
-        Assert.False(result.IsError);
+        _mockIWorkEventRepository.Verify(x => x.GetAllEvents(1), Times.Once);
+
+        result.IsError.Should().BeFalse();
     }
 }

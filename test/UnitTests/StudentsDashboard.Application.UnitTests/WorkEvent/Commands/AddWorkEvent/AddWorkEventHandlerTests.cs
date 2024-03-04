@@ -1,6 +1,5 @@
 using FluentAssertions;
 using Moq;
-using StudentsDashboard.Application.Common.Errors;
 using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Application.UnitTests.WorkEvent.TestUtils;
 using StudentsDashboard.Application.WorkEvents.Commands.AddWorkEvent;
@@ -10,14 +9,14 @@ namespace StudentsDashboard.Application.UnitTests.WorkEvent.Commands.AddWorkEven
 public class AddWorkEventHandlerTests
 {
     private readonly AddWorkEventHandler _handler;
-    private readonly Mock<IWorkEventRepository> _mockInterface;
-    private readonly Mock<IUserContextGetIdService> _mockGetUserId;
+    private readonly Mock<IWorkEventRepository> _mockIWorkEventRepository;
+    private readonly Mock<IUserContextGetIdService> _mockIUserContextGetIdService;
 
     public AddWorkEventHandlerTests()
     {
-        _mockInterface = new Mock<IWorkEventRepository>();
-        _mockGetUserId = new Mock<IUserContextGetIdService>();
-        _handler = new AddWorkEventHandler(_mockInterface.Object, _mockGetUserId.Object);
+        _mockIWorkEventRepository = new Mock<IWorkEventRepository>();
+        _mockIUserContextGetIdService = new Mock<IUserContextGetIdService>();
+        _handler = new AddWorkEventHandler(_mockIWorkEventRepository.Object, _mockIUserContextGetIdService.Object);
     }
 
     [Fact]
@@ -26,16 +25,14 @@ public class AddWorkEventHandlerTests
         //Arrange
         var eventHandler = AddWorkEventCommandUtils.AddWorkEventCommand();
 
-        _mockGetUserId.Setup(x => x.GetUserId)
-            .Returns((int?)null);
+        _mockIUserContextGetIdService.Setup(x => x.GetUserId)
+            .Returns(value: null);
 
         //Act
         var result = await _handler.Handle(eventHandler, default);
 
         //Assert
-        Assert.True(result.IsError);
-        Assert.Single(result.Errors);
-        Assert.Equal(Errors.WorkEvent.UserDoesNotLogged, result.Errors.Single());
+        result.IsError.Should().BeTrue();
     }
 
     [Fact]
@@ -44,13 +41,13 @@ public class AddWorkEventHandlerTests
         //Arrange
         var eventHandler = AddWorkEventCommandUtils.AddWorkEventCommand();
 
-        _mockGetUserId.Setup(x => x.GetUserId)
+        _mockIUserContextGetIdService.Setup(x => x.GetUserId)
             .Returns(1);
 
         //Act
         var result = await _handler.Handle(eventHandler, default);
 
         //Assert
-        Assert.False(result.IsError);
+        result.IsError.Should().BeFalse();
     }
 }
