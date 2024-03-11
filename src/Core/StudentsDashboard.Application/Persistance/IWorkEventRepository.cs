@@ -12,5 +12,5 @@ public interface IWorkEventRepository
     Task<IEnumerable<WorkEvent>> GetEndedEvents(int userId);
     Task<IEnumerable<WorkEvent>> GetOngoingEvents(int userId);
     Task<IEnumerable<WorkEvent>> GetAllEvents(int userId);
-    Task<IEnumerable<WorkEvent>> GetEvent(int eventId);
+    Task<IEnumerable<WorkEvent>> GetEvent(int eventId, int userId);
 }

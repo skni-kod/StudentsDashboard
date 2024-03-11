@@ -24,9 +24,9 @@ public class GetEventHandler : IRequestHandler<GetEventQuery, ErrorOr<List<GetEv
 
         if (userId is null) return Errors.WorkEvent.UserDoesNotLogged;
 
-        var events = await _workEventRepository.GetEvent(request.Id);
+        var events = await _workEventRepository.GetEvent(request.Id, (int)userId);
 
-        if (!events.Any()) return Errors.WorkEvent.NotDataToDisplay;
+        if (events is null) return Errors.WorkEvent.NotDataToDisplay;
 
         var result = events.Select(e => e.AsDto()).ToList();
 

@@ -9,14 +9,13 @@ namespace StudentsDashboard.Application.WorkEvents.Commands.DeleteWorkEvent;
 public class DeleteWorkEventHandler : IRequestHandler<DeleteWorkEventCommand, ErrorOr<WorkEventResponse>>
 {
     private readonly IUserContextGetIdService _userContextGetId;
+    private readonly IWorkEventRepository _workEventRepository;
 
     public DeleteWorkEventHandler(IUserContextGetIdService userContextGetId, IWorkEventRepository workEventRepository)
     {
         _userContextGetId = userContextGetId;
         _workEventRepository = workEventRepository;
     }
-
-    private readonly IWorkEventRepository _workEventRepository;
     
     public async Task<ErrorOr<WorkEventResponse>> Handle(DeleteWorkEventCommand request, CancellationToken cancellationToken)
     {

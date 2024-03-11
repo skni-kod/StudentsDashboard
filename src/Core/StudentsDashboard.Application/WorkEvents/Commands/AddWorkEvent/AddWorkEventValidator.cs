@@ -13,18 +13,12 @@ public class AddWorkEventValidator : AbstractValidator<AddWorkEventCommand>
         RuleFor(x => x.FromDate)
             .GreaterThanOrEqualTo(DateOnly.FromDateTime(DateTime.Now)).WithMessage("You can't add older event");
 
-        RuleFor(x => x.FromTime)
-            .Must((model, value) => model.FromDate == DateOnly.FromDateTime(DateTime.Now) 
-                                    && value <= TimeOnly.FromDateTime(DateTime.Now.AddMinutes(1)))
-            .WithMessage("You can't add older event");
-
         RuleFor(x => x.ToDate)
-            .Must((model, value) => value > model.FromDate)
-            .WithMessage("You can't add older data ");
-
-        RuleFor(x => x.ToTime)
-            .Must((model, value) => value <= model.FromTime && model.ToDate <= model.FromDate)
+            .Must((model, value) => value >= model.FromDate)
             .WithMessage("You can't add older data");
 
+        RuleFor(x => x.ToTime)
+            .Must((model, value) => value > model.FromTime && model.ToDate >= model.FromDate)
+            .WithMessage("You can't add older data");
     }
 }

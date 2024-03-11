@@ -11,5 +11,5 @@ public record EditWorkEventCommand(
     TimeOnly FromTime,
     DateOnly ToData,
     TimeOnly ToTime,
-    double? Location
+    double Location
 ) : IRequest<ErrorOr<WorkEventResponse>>;
