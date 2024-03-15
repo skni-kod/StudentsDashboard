@@ -11,6 +11,11 @@ public static partial class Errors
                 code: "User.DuplicateEmail",
                 description: "Email is already taken");
 
+        public static Error BadData => 
+            Error.Conflict(
+                code:"User.BadData", 
+                description: "Wrong login data");
+
         public static Error UserDoesNotExist =>
             Error.NotFound(
                 code: "User.UserDoesNotExist",
@@ -20,6 +25,7 @@ public static partial class Errors
             Error.Conflict(
                 code: "User.VerifiedEmail",
                 description: "The email has already been verified");
+        
         public static Error InvalidToken =>
             Error.Validation(
                 code: "User.InvalidToken",

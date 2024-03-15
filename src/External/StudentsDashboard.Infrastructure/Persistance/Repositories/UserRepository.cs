@@ -1,4 +1,5 @@
-﻿using StudentsDashboard.Application.Persistance;
+﻿using Microsoft.EntityFrameworkCore;
+using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Domain.Entities;
 using BC = BCrypt.Net.BCrypt;
 
@@ -32,6 +33,20 @@ public class UserRepository : IUserRepository
         _dbContext.SaveChanges();
 
         return user.Id;
+    }
+
+    public async Task<User?> GetUser(string email, string password)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+
+        if (user is null) return null;
+        
+
+        var passwordVerification = BCrypt.Net.BCrypt.Verify(password, user.Password);
+
+        if (!passwordVerification) return null;
+
+        return user;
     }
 
     public void VerifyEmail(User user)

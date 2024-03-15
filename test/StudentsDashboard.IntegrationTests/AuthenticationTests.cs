@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using StudentsDashboard.Application.Authentication.Commands.Login;
 using StudentsDashboard.Application.Authentication.Commands.Register;
 using StudentsDashboard.Application.Contracts.Authentication;
 using StudentsDashboard.Infrastructure.Persistance;

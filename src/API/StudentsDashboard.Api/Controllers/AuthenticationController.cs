@@ -1,6 +1,6 @@
-﻿using System.Security.Cryptography;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using StudentsDashboard.Application.Authentication.Commands.Login;
 using StudentsDashboard.Application.Authentication.Commands.Register;
 using StudentsDashboard.Application.Authentication.Commands.VerifyEmail;
 using StudentsDashboard.Application.Contracts.Authentication;
@@ -30,6 +30,21 @@ public class AuthenticationController : ApiController
         var response = await _mediator.Send(command);
         return response.Match(
             registerResponse => Ok(registerResponse),
+            errors => Problem(errors));
+    }
+
+    /// <summary>
+    /// Sing-in controller
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginCommand command)
+    {
+        var response = await _mediator.Send(command);
+    
+        return response.Match(
+            loginResponse => Ok(loginResponse),
             errors => Problem(errors));
     }
 

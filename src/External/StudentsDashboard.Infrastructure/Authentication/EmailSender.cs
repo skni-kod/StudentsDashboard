@@ -1,11 +1,8 @@
 ﻿using MailKit.Net.Smtp;
 using MailKit.Security;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
-using RestSharp;
-using RestSharp.Authenticators;
 using StudentsDashboard.Application.Common.Interfaces.Authentication;
 using StudentsDashboard.Application.Common.Models;
 using StudentsDashboard.Infrastructure.Authentication;

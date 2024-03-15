@@ -95,9 +95,11 @@ public class WorkEventRepository : IWorkEventRepository
         return result;
     }
 
-    public async Task<IEnumerable<WorkEvent>> GetEvent(int eventId)
+    public async Task<IEnumerable<WorkEvent>> GetEvent(int eventId, int userId)
     {
         var result = await _context.WorkEvents.FindAsync(eventId);
+
+        if (result is null || result.Id_Customer != userId) return null; 
         
         return new List<WorkEvent>() { result };
     }
