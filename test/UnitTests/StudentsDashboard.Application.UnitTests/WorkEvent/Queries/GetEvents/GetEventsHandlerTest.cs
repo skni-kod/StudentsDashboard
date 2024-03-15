@@ -55,10 +55,28 @@ public class GetEventsHandlerTest
     public async Task Handle_Should_ReturnData_WhenUserLoggedAndWhenDataExists()
     {
         //Arrange
+        var mockEvents = new List<Domain.Entities.WorkEvent>
+        {
+            new Domain.Entities.WorkEvent
+            {
+                Id = 1,
+                Id_Customer = 1,
+                Location = 12.34,
+                Title = "Test",
+                From_Date = DateOnly.Parse("1990-12-12"),
+                From_Time = TimeOnly.Parse("12:30"),
+                To_Date = DateOnly.Parse("1990-12-12"),
+                To_Time = TimeOnly.Parse("12:30")
+            }
+        };
+        
         var query = new GetEventsQuery(null);
 
         _mockIUserContextGetIdService.Setup(x => x.GetUserId)
             .Returns(1);
+
+        _mockIWorkEventRepository.Setup(x => x.GetAllEvents(It.IsAny<int>()))
+            .ReturnsAsync(mockEvents);
 
         //Act
         var result = await _handler.Handle(query, default);
