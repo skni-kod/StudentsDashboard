@@ -1,5 +1,7 @@
 ﻿using StudentsDashboard.Domain.Entities;
 using StudentsDashboard.Application.Persistance;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace StudentsDashboard.Infrastructure.Persistance.Repositories;
 
@@ -12,24 +14,24 @@ public class WorkTaskRepository : IWorkTaskRepository
         _dbContext = dbContext;
     }
 
-    public void createTask(WorkTask newTask)
+    public async Task CreateTask(WorkTask newTask)
     {
-        _dbContext.WorkTasks.Add(newTask);
-        _dbContext.SaveChanges();
+        await _dbContext.WorkTasks.AddAsync(newTask);
+        await _dbContext.SaveChangesAsync();
     }
 
-    public void deleteTask(int Id)
+    public async Task DeleteTask(int Id)
     {
-        var result = _dbContext.WorkTasks.SingleOrDefault(c => c.Id == Id);
+        var result = await _dbContext.WorkTasks.FindAsync(Id);
 
 
         _dbContext.WorkTasks.Remove(result);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
     }
 
-    public void editTask(int Id, WorkTask editedTask)
+    public async Task EditTask(int Id, WorkTask editedTask)
     {
-        var result = _dbContext.WorkTasks.FirstOrDefault(c => c.Id == Id);
+        var result = await _dbContext.WorkTasks.FindAsync(Id);
 
         if (result.Name != editedTask.Name)
         {
@@ -39,26 +41,25 @@ public class WorkTaskRepository : IWorkTaskRepository
         {
             result.Date = editedTask.Date;
         }
-        if(result.Desciption != editedTask.Desciption)
+        if(result.Description != editedTask.Description)
         {
-            result.Desciption = editedTask.Desciption;
+            result.Description = editedTask.Description;
         }
 
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
     }
 
-    public IEnumerable<WorkTask> getAllTask(int IdUSer)
+    public async Task<IEnumerable<WorkTask>> GetAllTask(int Id_USer)
     {
-        var taskList = _dbContext.WorkTasks.ToList().
-                        FindAll(l => l.Id_Customer == IdUSer);
+        var taskList = await _dbContext.WorkTasks.
+            Where(l => l.IdUser == Id_USer).ToListAsync();
 
         return taskList;
     }
 
-    public WorkTask? getTask(int IdUser,int Id)
+    public async Task<WorkTask?> GetTask(int Id_User,int Id_Task)
     {
-        var task= _dbContext.WorkTasks.FirstOrDefault(r => r.Id == Id && r.Id_Customer == IdUser);
+        var task = await _dbContext.WorkTasks.FirstOrDefaultAsync(r => r.Id == Id_Task && r.IdUser == Id_User);
         return task;
     }
-    
 }

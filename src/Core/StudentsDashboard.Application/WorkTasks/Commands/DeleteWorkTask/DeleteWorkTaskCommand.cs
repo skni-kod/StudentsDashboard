@@ -7,7 +7,7 @@ namespace StudentsDashboard.Application.WorkTasks.Commands.DeleteWorkTask
 {
     public record DeleteWorkTaskCommand
     (
-        int Id,
-        int IdUser) : IRequest<ErrorOr<WorkTaskResponse>>;
+        int Id
+        ) : IRequest<ErrorOr<WorkTaskResponse>>;
 
 }

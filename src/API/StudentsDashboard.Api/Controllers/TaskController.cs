@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using StudentsDashboard.Application.Contracts.WorkTaskAnswer;
 using StudentsDashboard.Application.WorkTasks.Commands.AddWorkTask;
 using StudentsDashboard.Application.WorkTasks.Commands.EditWorkTask;
-using StudentsDashboard.Application.WorkTasks.Commands.GetWorkTask;
-using StudentsDashboard.Application.WorkTasks.Commands.GetAllWorkTask;
 using StudentsDashboard.Application.WorkTasks.Commands.DeleteWorkTask;
 
 using static StudentsDashboard.Application.Common.Errors.Errors;
+using StudentsDashboard.Application.WorkTasks.Queries.GetAllWorkTask;
+using StudentsDashboard.Application.WorkTasks.Queries.GetWorkTask;
 
 
 
@@ -59,12 +59,17 @@ namespace StudentsDashboard.Api.Controllers
                     errors => Problem(errors));
         }
 
+
+        /// <summary>
+        /// Display one specific event
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpDelete("DeleteWorkTask")]
-        public async Task<IActionResult> DeleteWorkTask([FromBody] int Id, int IdUser)
+        public async Task<IActionResult> DeleteWorkTask([FromQuery] int id)
         {
             var command = new DeleteWorkTaskCommand(
-                Id,
-                IdUser
+                id
                 );
 
             var response = await _mediator.Send(command);
@@ -74,30 +79,33 @@ namespace StudentsDashboard.Api.Controllers
                     errors => Problem(errors));
         }
 
+
+        /// <summary>
+        /// Display one specific event
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet("GetWorkTask")]
-        public async Task<IActionResult> GetWorkTask([FromBody] int Id, int IdUser)
+        public async Task<IActionResult> GetWorkTask([FromQuery] GetWorkTaskQuery query)
         {
-            var command = new GetWorkTaskCommand(
-                Id,
-                IdUser
-                );
-
-            var response = await _mediator.Send(command);
+            var response = await _mediator.Send(query);
 
             return response.Match(
                     WorkTaskResponse => Ok(WorkTaskResponse),
                     errors => Problem(errors));
         }
 
+
+
+        /// <summary>
+        /// Display one specific event
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet("GetAllWorkTask")]
-        public async Task<IActionResult> GetAllTask([FromBody] int IdUser)
+        public async Task<IActionResult> GetAllTask([FromQuery] GetAllWorkTaskQuery query)
         {
-            var command = new GetAllWorkTaskCommand(
-                    IdUser
-                    );
-
-
-            var response = await _mediator.Send(command);
+            var response = await _mediator.Send(query);
 
             return response.Match(
                     WorkTaskResponse => Ok(WorkTaskResponse),

@@ -8,26 +8,36 @@ using StudentsDashboard.Domain.Entities;
 
 namespace StudentsDashboard.Application.WorkTasks.Commands.AddWorkTask
 {
-    public class AddWorkTaskHandler : IRequestHandler<AddWorkTaskCommand, ErrorOr<WorkTaskResponse>>
+    public class AddWorkTaskCommandHandler : IRequestHandler<AddWorkTaskCommand, ErrorOr<WorkTaskResponse>>
     {
         private readonly IWorkTaskRepository _workTaskRepository;
+        private readonly IUserContextGetIdService _userContextGetId;
 
-        public AddWorkTaskHandler(IWorkTaskRepository workTaskRepository)
+        public AddWorkTaskCommandHandler(IWorkTaskRepository workTaskRepository, IUserContextGetIdService userContextGetId)
         {
             _workTaskRepository = workTaskRepository;
+            _userContextGetId = userContextGetId;
         }
 
         public async Task<ErrorOr<WorkTaskResponse>> Handle(AddWorkTaskCommand request, CancellationToken cancellationToken)
         {
+            var userId = 1;//_userContextGetId.GetUserId;
+
+/*            if (userId is null)
+            {
+                return Errors.WorkTask.UserDoesNotLogged;
+            }*/
+
 
             var workTask = new WorkTask
             {
+                IdUser = (int)userId,
                 Name = request.Name,
-                Desciption = request.Desciption,
+                Description = request.Description,
                 Date = request.Date
             };
 
-            _workTaskRepository.createTask(workTask);
+            await _workTaskRepository.CreateTask(workTask);
 
             return new WorkTaskResponse("Task added");
         }

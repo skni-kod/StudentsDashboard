@@ -3,10 +3,10 @@
 
 namespace StudentsDashboard.Application.WorkTasks.Commands.DeleteWorkTask
 {
-    public class DeleteWorkTaskValidator : AbstractValidator<DeleteWorkTaskCommand>
+    public class DeleteWorkTaskCommandValidator : AbstractValidator<DeleteWorkTaskCommand>
     {
 
-        public DeleteWorkTaskValidator()
+        public DeleteWorkTaskCommandValidator()
         {
 
             RuleFor(x => x.Id)

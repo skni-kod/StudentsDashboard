@@ -2,9 +2,9 @@
 
 namespace StudentsDashboard.Application.WorkTasks.Commands.AddWorkTask
 {
-    public class AddWorkTaskValidator : AbstractValidator<AddWorkTaskCommand>
+    public class AddWorkTaskCommandValidator : AbstractValidator<AddWorkTaskCommand>
     {
-        public AddWorkTaskValidator() {
+        public AddWorkTaskCommandValidator() {
 
             RuleFor(x => x.Name)
                  .NotEmpty().WithMessage("Name is required");
