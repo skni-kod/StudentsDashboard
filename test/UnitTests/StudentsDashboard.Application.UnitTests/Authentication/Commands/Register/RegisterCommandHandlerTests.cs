@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
 using FluentValidation.TestHelper;
+using MediatR;
 using Moq;
 using StudentsDashboard.Application.Authentication.Commands.Register;
+using StudentsDashboard.Application.Authentication.Events;
 using StudentsDashboard.Application.Persistance;
 using StudentsDashboard.Application.UnitTests.Authentication.Commands.TestUtils;
 using StudentsDashboard.Domain.Entities;
@@ -12,11 +14,13 @@ public class RegisterCommandHandlerTests
 {
     private readonly RegisterCommandHandler _handler;
     private readonly Mock<IUserRepository> _mockUserRepository;
+    private readonly Mock<IMediator> _mockMediator;
 
     public RegisterCommandHandlerTests()
     {
         _mockUserRepository = new Mock<IUserRepository>();
-        _handler = new RegisterCommandHandler(_mockUserRepository.Object);
+        _mockMediator = new Mock<IMediator>();
+        _handler = new RegisterCommandHandler(_mockUserRepository.Object, _mockMediator.Object);
     }
     
     [Fact]
@@ -45,6 +49,13 @@ public class RegisterCommandHandlerTests
         _mockUserRepository
             .Setup(x => x.Any(It.IsAny<string>()))
             .Returns(false);
+        _mockUserRepository
+            .Setup(x => x.Add(It.IsAny<User>()))
+            .Returns(1);
+        _mockMediator
+            .Setup(x => 
+                x.Publish(It.IsAny<UserRegisteredEvent>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
         
         // Act
         var result = await _handler.Handle(registerCommand, default);

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StudentsDashboard.Infrastructure.Persistance;
@@ -11,9 +12,11 @@ using StudentsDashboard.Infrastructure.Persistance;
 namespace StudentsDashboard.Infrastructure.Persistance.Migrations
 {
     [DbContext(typeof(StudentsDashboardDbContext))]
-    partial class StudentsDashboardDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240221202302_AddColumnsToUserTable")]
+    partial class AddColumnsToUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

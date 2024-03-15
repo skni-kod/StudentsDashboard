@@ -15,5 +15,20 @@ public static partial class Errors
             Error.Conflict(
                 code:"User.BadData", 
                 description: "Wrong login data");
+
+        public static Error UserDoesNotExist =>
+            Error.NotFound(
+                code: "User.UserDoesNotExist",
+                description: "User with this email doesn't exist");
+
+        public static Error VerifiedEmail =>
+            Error.Conflict(
+                code: "User.VerifiedEmail",
+                description: "The email has already been verified");
+        
+        public static Error InvalidToken =>
+            Error.Validation(
+                code: "User.InvalidToken",
+                description: "The token provided is invalid");
     }
 }

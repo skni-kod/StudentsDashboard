@@ -31,4 +31,8 @@
       <ProjectReference Include="..\..\..\src\Core\StudentsDashboard.Application\StudentsDashboard.Application.csproj" />
     </ItemGroup>
 
+
+
+
+
 </Project>
